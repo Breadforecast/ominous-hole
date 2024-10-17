@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3 uid="uid://mgocrg1ae4ua"]
+
+[ext_resource type="Theme" uid="uid://ccir3r1kplenn" path="res://terminal/terminal_theme.tres" id="1_f8fyp"]
+[ext_resource type="Script" path="res://terminal/terminal.gd" id="2_v4dqc"]
+[ext_resource type="PackedScene" uid="uid://ded1amtcs7sl" path="res://commands/commands.tscn" id="3_7sdc2"]
+[ext_resource type="PackedScene" uid="uid://bfhv3kah7wri4" path="res://drone_world/drone_world.tscn" id="4_gfqdd"]
+
+[node name="Terminal" type="Control" node_paths=PackedStringArray("radar_viewport", "command_output", "command_input", "commands")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_f8fyp")
+script = ExtResource("2_v4dqc")
+radar_viewport = NodePath("PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport")
+command_output = NodePath("PanelContainer/TerminalContainer/VBoxContainer/TerminalOutput/ScrollContainer/OutputTextContainer")
+command_input = NodePath("PanelContainer/TerminalContainer/VBoxContainer/InputField")
+commands = NodePath("Commands")
+metadata/_edit_lock_ = true
+
+[node name="Commands" parent="." instance=ExtResource("3_7sdc2")]
+move_drone_acceptable_inputs = Array[String](["rov.move", "rov.mov"])
+rotate_drone_acceptable_inputs = Array[String](["rov.rotate", "rov.rot"])
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TerminalContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_lock_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/TerminalContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="RadarView" type="SubViewportContainer" parent="PanelContainer/TerminalContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+stretch_shrink = 4
+
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView"]
+disable_3d = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+audio_listener_enable_2d = true
+size = Vector2i(271, 172)
+render_target_update_mode = 4
+
+[node name="DroneWorld" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport" instance=ExtResource("4_gfqdd")]
+
+[node name="Drone" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport/DroneWorld" index="0" node_paths=PackedStringArray("commands")]
+commands = NodePath("../../../../../../../Commands")
+
+[node name="Camera2D" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport/DroneWorld/Drone" index="4"]
+zoom = Vector2(0.6, 0.6)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TerminalContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_lock_ = true
+
+[node name="TerminalOutput" type="PanelContainer" parent="PanelContainer/TerminalContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/TerminalContainer/VBoxContainer/TerminalOutput"]
+layout_mode = 2
+
+[node name="OutputTextContainer" type="VBoxContainer" parent="PanelContainer/TerminalContainer/VBoxContainer/TerminalOutput/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InputField" type="LineEdit" parent="PanelContainer/TerminalContainer/VBoxContainer"]
+layout_mode = 2
+caret_blink = true
+
+[connection signal="clear_terminal" from="Commands" to="." method="_on_commands_clear_terminal"]
+[connection signal="text_outputted" from="Commands" to="." method="_on_commands_text_outputted"]
+[connection signal="text_submitted" from="PanelContainer/TerminalContainer/VBoxContainer/InputField" to="." method="_on_input_field_text_submitted"]
+
+[editable path="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport/DroneWorld"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ded1amtcs7sl"]
+
+[ext_resource type="Script" path="res://commands/commands.gd" id="1_agwvh"]
+
+[node name="Commands" type="Node"]
+script = ExtResource("1_agwvh")
+help_acceptable_inputs = Array[String](["h", "help"])
+help_text = "fucking idiot lmao"
+move_drone_acceptable_inputs = Array[String](["dr.move", "dr.mov", "drone.move", "drone.mov"])
+rotate_drone_acceptable_inputs = Array[String](["dr.rotate", "dr.rot", "drone.rot", "drone.rotate"])
+clear_acceptable_inputs = Array[String](["clr", "clear"])
