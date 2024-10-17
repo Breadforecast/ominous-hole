@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://mgocrg1ae4ua"]
 
-[ext_resource type="Theme" uid="uid://ccir3r1kplenn" path="res://terminal/terminal_theme.tres" id="1_f8fyp"]
+[ext_resource type="Theme" uid="uid://ccir3r1kplenn" path="res://ui/terminal_theme.tres" id="1_f8fyp"]
 [ext_resource type="Script" path="res://terminal/terminal.gd" id="2_v4dqc"]
 [ext_resource type="PackedScene" uid="uid://ded1amtcs7sl" path="res://commands/commands.tscn" id="3_7sdc2"]
 [ext_resource type="PackedScene" uid="uid://bfhv3kah7wri4" path="res://drone_world/drone_world.tscn" id="4_gfqdd"]
@@ -58,11 +58,8 @@ render_target_update_mode = 4
 
 [node name="DroneWorld" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport" instance=ExtResource("4_gfqdd")]
 
-[node name="Drone" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport/DroneWorld" index="0" node_paths=PackedStringArray("commands")]
+[node name="ROV" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport/DroneWorld" index="0" node_paths=PackedStringArray("commands")]
 commands = NodePath("../../../../../../../Commands")
-
-[node name="Camera2D" parent="PanelContainer/TerminalContainer/PanelContainer/RadarView/SubViewport/DroneWorld/Drone" index="4"]
-zoom = Vector2(0.6, 0.6)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TerminalContainer"]
 layout_mode = 2

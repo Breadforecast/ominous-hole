@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://vrjisstavg2n"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_ykyjb"]
+[ext_resource type="PackedScene" uid="uid://dyjuoefvl2pxp" path="res://ui/player/player_ui.tscn" id="2_x8h3d"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_skb4x"]
+height = 3.0
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_pivot", "camera", "raycast", "hold_point", "drop_point")]
+script = ExtResource("1_ykyjb")
+camera_pivot = NodePath("CameraPivot")
+camera = NodePath("CameraPivot/Camera")
+raycast = NodePath("CameraPivot/RayCast3D")
+hold_point = NodePath("CameraPivot/HoldPoint")
+drop_point = NodePath("CameraPivot/SpringArm3D/DropPoint")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_skb4x")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="HoldPoint" type="Node3D" parent="CameraPivot"]
+transform = Transform3D(0.857607, 0, -0.514305, 0.225715, 0.898549, 0.376381, 0.462128, -0.438873, 0.770602, 0.362, -0.357, -0.972)
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraPivot"]
+target_position = Vector3(0, 0, -7)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, -1, -2.83122e-07, 0, 2.83122e-07, -1, 0, 0, 0)
+spring_length = 7.0
+
+[node name="DropPoint" type="Node3D" parent="CameraPivot/SpringArm3D"]
+
+[node name="Camera" type="Camera3D" parent="CameraPivot"]
+cull_mask = 1048573
+
+[node name="PlayerUI" parent="." instance=ExtResource("2_x8h3d")]

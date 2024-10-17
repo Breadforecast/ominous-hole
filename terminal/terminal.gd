@@ -23,6 +23,13 @@ func output_command_text(text: String, show_arrow := true) -> void:
 	command_input.clear()
 
 
+func set_input_focus(value: bool) -> void:
+	if value:
+		command_input.grab_focus()
+	else:
+		command_input.release_focus()
+
+
 func _on_input_field_text_submitted(new_text: String) -> void:
 	if new_text.is_empty():
 		return

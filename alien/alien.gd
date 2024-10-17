@@ -2,7 +2,7 @@ class_name Alien
 extends CharacterBody2D
 
 
-const SPEED := 300.0
+const SPEED := 75.0
 
 enum States {WANDER, CHASE}
 
@@ -39,7 +39,6 @@ func _on_nav_agent_navigation_finished() -> void:
 		var point: Marker2D = points.pick_random()
 		_make_path(point.global_position)
 	elif state == States.CHASE:
-		nav_agent.patc
 		_make_path(rov.global_position)
 
 

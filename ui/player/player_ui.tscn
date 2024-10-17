@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyjuoefvl2pxp"]
+
+[ext_resource type="Shader" path="res://player/crosshair.gdshader" id="1_lea6e"]
+[ext_resource type="Script" path="res://ui/player/player_ui.gd" id="1_mc0ps"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_id8at"]
+shader = ExtResource("1_lea6e")
+
+[node name="PlayerUI" type="CanvasLayer"]
+script = ExtResource("1_mc0ps")
+
+[node name="Crosshair" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_id8at")
+custom_minimum_size = Vector2(4, 4)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

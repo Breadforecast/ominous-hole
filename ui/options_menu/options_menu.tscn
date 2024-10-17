@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://5g1jlpegclba"]
+
+[ext_resource type="Theme" uid="uid://ccir3r1kplenn" path="res://ui/terminal_theme.tres" id="1_o10ut"]
+[ext_resource type="Script" path="res://ui/options_menu/options_menu.gd" id="2_lex7y"]
+
+[node name="OptionsMenu" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_o10ut")
+script = ExtResource("2_lex7y")
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="VolumeContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VolumeLabel" type="Label" parent="VBoxContainer/VolumeContainer"]
+layout_mode = 2
+text = "Master Volume:"
+
+[node name="VolumeSlider" type="HSlider" parent="VBoxContainer/VolumeContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="SensitivityContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SensitivityLabel" type="Label" parent="VBoxContainer/SensitivityContainer"]
+layout_mode = 2
+text = "Mouse Sensitivity:"
+
+[node name="SensitivitySlider" type="HSlider" parent="VBoxContainer/SensitivityContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ApplyButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Apply"
+
+[node name="ConfirmButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[connection signal="pressed" from="VBoxContainer/ButtonsContainer/ApplyButton" to="." method="_on_apply_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonsContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]

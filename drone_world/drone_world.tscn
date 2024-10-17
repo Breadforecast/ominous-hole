@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bfhv3kah7wri4"]
 
-[ext_resource type="Script" path="res://world.gd" id="1_2m1n6"]
+[ext_resource type="Script" path="res://drone_world/world.gd" id="1_2m1n6"]
 [ext_resource type="PackedScene" uid="uid://dnk1mawy8gd3l" path="res://rov/rov.tscn" id="1_wr6lf"]
 [ext_resource type="PackedScene" uid="uid://d1kj187ej4rln" path="res://alien/alien.tscn" id="2_nphik"]
-[ext_resource type="Script" path="res://static_body_2d.gd" id="3_8u51p"]
+[ext_resource type="Script" path="res://drone_world/static_body_2d.gd" id="3_8u51p"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jkuv7"]
 vertices = PackedVector2Array(747.172, -99.1484, 830.227, 421.641, 457.063, 423.32, 487.039, -85.1094, -262.469, -102.781, 291.508, -80.9922, 286.094, 424.078, -308.523, 426.75)
@@ -22,10 +22,9 @@ rov = NodePath("ROV")
 position = Vector2(274, 182)
 
 [node name="Camera2D" type="Camera2D" parent="ROV"]
-zoom = Vector2(4, 4)
 
 [node name="Alien" parent="." node_paths=PackedStringArray("wander_points") instance=ExtResource("2_nphik")]
-position = Vector2(212, 174)
+position = Vector2(568, 168)
 wander_points = NodePath("../WanderPoints")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]

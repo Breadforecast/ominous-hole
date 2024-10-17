@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dil35frmlrgr7"]
+
+[ext_resource type="PackedScene" uid="uid://mgocrg1ae4ua" path="res://terminal/terminal.tscn" id="1_7xeda"]
+[ext_resource type="Script" path="res://terminal/screen/screen.gd" id="1_wvj26"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_a3d4w"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rwbqf"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_a3d4w")
+
+[sub_resource type="QuadMesh" id="QuadMesh_6bc5t"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_rwbqf")
+size = Vector2(2, 1)
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_1mowe"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pambf"]
+size = Vector3(2.01332, 1, 0.0606079)
+
+[node name="Screen" type="MeshInstance3D" node_paths=PackedStringArray("viewport", "terminal", "camera")]
+mesh = SubResource("QuadMesh_6bc5t")
+script = ExtResource("1_wvj26")
+viewport = NodePath("SubViewport")
+terminal = NodePath("SubViewport/Terminal")
+camera = NodePath("Camera")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+canvas_item_default_texture_filter = 0
+gui_disable_input = true
+size = Vector2i(1280, 720)
+size_2d_override = Vector2i(1280, 720)
+size_2d_override_stretch = true
+
+[node name="Terminal" parent="SubViewport" instance=ExtResource("1_7xeda")]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamMicrophone_1mowe")
+
+[node name="Area3D" type="Area3D" parent="."]
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0123367, 0, -0.0128479)
+shape = SubResource("BoxShape3D_pambf")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.847812)

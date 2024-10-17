@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://beeg7udjeqdmk"]
+
+[ext_resource type="Script" path="res://pickups/base/pickup.gd" id="1_dylov"]
+
+[node name="Pickup" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 3
+mass = 0.5
+script = ExtResource("1_dylov")
+
+[node name="Area3D" type="Area3D" parent="."]
+monitoring = false
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
