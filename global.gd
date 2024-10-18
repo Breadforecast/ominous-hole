@@ -10,7 +10,7 @@ var user_options := {
 	"max_fps": 1000, # Range of 1-360, steps of 1
 }
 
-var rov_inventory: Array[PackedScene]
+var rov_inventory: Array[PackedScene] = [load("res://pickups/super_test_cube/super_test_ cube.tscn")]
 
 
 func _ready() -> void:
@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func reset_volume() -> void:
 	var m_index := AudioServer.get_bus_index("Master")
-	AudioServer.set_bus_volume_db(m_index, 
+	AudioServer.set_bus_volume_db(m_index,
 			linear_to_db(user_options.master_volume))
 
 

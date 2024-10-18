@@ -26,9 +26,9 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	var captured := (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or 
+	var captured := (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or
 			not viewport_selected)
-	
+
 	if Input.is_action_just_pressed("left_click") and captured:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -39,39 +39,22 @@ func _input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	var can_interact := raycast.is_colliding() and not holding
-	%PlayerUI.set_input_visibility(can_interact)
-	if can_interact:
-		var area := raycast.get_collider()
-		var area_owner = area.owner
-		var can_pickup_item := area_owner is Pickup and not holding
-		if Input.is_action_just_pressed("interact"):
-			if area_owner is Screen:
-				area_owner.interacting = true
-				viewport_selected = area_owner.viewport
-				%PlayerUI.set_crosshair_visibility(false)
-			if can_pickup_item:
-				holding = area_owner
-				holding.get_parent().remove_child(holding)
-				hold_point.add_child(holding)
-				holding.position = Vector3.ZERO
-				holding.rotation = Vector3.ZERO	
 	if Input.is_action_just_pressed("drop") and holding:
 		hold_point.remove_child(holding)
 		get_parent().add_child(holding)
 		holding.global_position = drop_point.global_position
 		holding.rotation.y = camera_pivot.rotation.y
 		holding = null
-	
+
 	if captured:
-		_input_dir = Input.get_vector("strafe_left", "strafe_right", 
+		_input_dir = Input.get_vector("strafe_left", "strafe_right",
 				"forward", "backward")
 	else:
 		_input_dir = Vector2.ZERO
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	var is_camera_motion := ( event is InputEventMouseMotion and 
+	var is_camera_motion := ( event is InputEventMouseMotion and
 			Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED)
 	if is_camera_motion:
 		_camera_input_direction = event.screen_relative * mouse_sensitivity
@@ -84,15 +67,15 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	
-	var direction := (camera_pivot.transform.basis * Vector3(_input_dir.x, 
+
+	var direction := (camera_pivot.transform.basis * Vector3(_input_dir.x,
 			0, _input_dir.y)).normalized()
-	
+
 	velocity.x = move_toward(velocity.x, direction.x * SPEED, ACCELERATION * delta)
 	velocity.z = move_toward(velocity.z, direction.z * SPEED, ACCELERATION * delta)
-	
+
 	_camera_movement(delta)
-	
+
 	move_and_slide()
 
 

@@ -7,6 +7,7 @@ signal move_drone(units: float)
 signal rotate_drone(degrees: float)
 signal drone_pickup
 signal clear_terminal
+signal spawn_unknown_command
 
 @export_category("Help Command")
 @export var help_acceptable_inputs: Array[String]
@@ -24,7 +25,7 @@ signal clear_terminal
 func send_command(command_text: String) -> void:
 	command_text = command_text.to_lower()
 	var split_command_text := command_text.split(" ", false, 1)
-	
+
 	if split_command_text[0] in help_acceptable_inputs:
 		text_outputted.emit(help_text)
 		return
@@ -45,5 +46,9 @@ func send_command(command_text: String) -> void:
 		return
 	if split_command_text[0] in clear_acceptable_inputs:
 		clear_terminal.emit()
+		return
+	if split_command_text[0] in ["unknown.command"]:
+		spawn_unknown_command.emit()
+		text_outputted.emit("Behind you.")
 		return
 	text_outputted.emit("Unknown command.")

@@ -1,11 +1,12 @@
-[gd_scene load_steps=29 format=4 uid="uid://ccb71in74j0uo"]
+[gd_scene load_steps=27 format=4 uid="uid://ccb71in74j0uo"]
 
 [ext_resource type="PackedScene" uid="uid://vrjisstavg2n" path="res://player/player.tscn" id="1_8fmm0"]
 [ext_resource type="PackedScene" uid="uid://dil35frmlrgr7" path="res://terminal/screen/screen.tscn" id="2_hiucy"]
 [ext_resource type="PackedScene" uid="uid://ddona4q1brj5r" path="res://pickups/test_cube/test_cube.tscn" id="3_pev5k"]
 [ext_resource type="PackedScene" uid="uid://wh4iays55eiq" path="res://workbench/workbench.tscn" id="4_a6d4n"]
 [ext_resource type="PackedScene" uid="uid://brs34fd48p2vr" path="res://pickups/rov/rov.tscn" id="5_dkp1m"]
-[ext_resource type="PackedScene" uid="uid://ck3ftj5x4ywpx" path="res://workbench/screen/screen.tscn" id="6_8vh3x"]
+[ext_resource type="Script" path="res://addons/Panel3D/3dpanel.gd" id="7_fx3st"]
+[ext_resource type="PackedScene" uid="uid://cik25x4muocna" path="res://workbench/recipe_list/recipe_list.tscn" id="8_kq5ww"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fb1a8"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -141,19 +142,6 @@ data = PackedVector3Array(-1, -1, -1, 1, 0.6746, -1, -1, 0.6746, -1, -1, -1, -1,
 [sub_resource type="BoxShape3D" id="BoxShape3D_216tn"]
 size = Vector3(9.73413, 3.03601, 3.15173)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_os77p"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hc6vd"]
-resource_local_to_scene = true
-shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_os77p")
-
-[sub_resource type="QuadMesh" id="QuadMesh_jk08s"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_hc6vd")
-size = Vector2(2, 1)
-
 [node name="Ship" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -162,27 +150,13 @@ environment = SubResource("Environment_lbqse")
 [node name="Player" parent="." instance=ExtResource("1_8fmm0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.159091, 2.50329, 0.0842152)
 
-[node name="Screen" parent="." instance=ExtResource("2_hiucy")]
+[node name="Screen" parent="." node_paths=PackedStringArray("pickup_location") instance=ExtResource("2_hiucy")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.54723, 2.57831, 7.74575)
 mesh = SubResource("QuadMesh_f4vt3")
+pickup_location = NodePath("PickupLocation")
 
-[node name="TestCube" parent="." instance=ExtResource("3_pev5k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85743, 0, -0.0777178)
-collision_layer = 1
-collision_mask = 1
-mass = 1.0
-
-[node name="TestCube2" parent="." instance=ExtResource("3_pev5k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85743, 0, 0.696411)
-collision_layer = 1
-collision_mask = 1
-mass = 1.0
-
-[node name="TestCube3" parent="." instance=ExtResource("3_pev5k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85743, 0, 1.37304)
-collision_layer = 1
-collision_mask = 1
-mass = 1.0
+[node name="PickupLocation" type="Node3D" parent="Screen"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.452771, -2.57831, 5.74575)
 
 [node name="room_temp" type="Node3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -216,19 +190,39 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="room_temp/Cube_002/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_ub47i")
 
-[node name="Area3D" parent="." node_paths=PackedStringArray("screen") instance=ExtResource("4_a6d4n")]
+[node name="Workbench" parent="." node_paths=PackedStringArray("panel_3d") instance=ExtResource("4_a6d4n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09784, 1.39541, 8.59719)
-screen = NodePath("../Screen2")
+recipe_list = ExtResource("8_kq5ww")
+panel_3d = NodePath("../Panel3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Workbench"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03284, 1.01801, -0.241028)
 shape = SubResource("BoxShape3D_216tn")
 
 [node name="ROV" parent="." instance=ExtResource("5_dkp1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87671, -2.86102e-06, 2.4065)
 
-[node name="Screen2" parent="." instance=ExtResource("6_8vh3x")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.87946, 1.87584, 6.75015)
-mesh = SubResource("QuadMesh_jk08s")
+[node name="Panel3D" type="StaticBody3D" parent="."]
+transform = Transform3D(-12, 0, 1.04907e-06, 0, 12, 0, -1.04907e-06, 0, -12, -3, 1.77942, 6.76529)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("7_fx3st")
+viewport_size = Vector2i(320, 180)
 
-[editable path="Screen2"]
+[node name="TestCube" parent="." instance=ExtResource("3_pev5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.64094, -3.09944e-06, -0.958993)
+
+[node name="TestCube2" parent="." instance=ExtResource("3_pev5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.64094, -3.09944e-06, 0.0016318)
+
+[node name="TestCube3" parent="." instance=ExtResource("3_pev5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.64094, -3.09944e-06, 0.859429)
+
+[node name="TestCube4" parent="." instance=ExtResource("3_pev5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34381, -3.09944e-06, -0.958993)
+
+[node name="TestCube5" parent="." instance=ExtResource("3_pev5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34381, -3.09944e-06, 0.0016318)
+
+[node name="TestCube6" parent="." instance=ExtResource("3_pev5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34381, -3.09944e-06, 0.859429)

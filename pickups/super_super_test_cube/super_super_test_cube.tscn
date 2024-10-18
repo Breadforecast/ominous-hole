@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2gudkl8340jq"]
+
+[ext_resource type="PackedScene" uid="uid://beeg7udjeqdmk" path="res://pickups/base/pickup.tscn" id="1_rnki4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6elpi"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_61t3j"]
+material = SubResource("StandardMaterial3D_6elpi")
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4hk0m"]
+size = Vector3(2, 2, 2)
+
+[node name="SuperSuperTestCube" node_paths=PackedStringArray("mesh", "collision_shape") instance=ExtResource("1_rnki4")]
+fancy_name = "Super Super Test Cube"
+id = 254
+mesh = NodePath("MeshInstance3D")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_61t3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_4hk0m")

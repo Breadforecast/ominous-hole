@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuf482xqiqi7q"]
+
+[ext_resource type="PackedScene" uid="uid://beeg7udjeqdmk" path="res://pickups/base/pickup.tscn" id="1_4d4ud"]
+[ext_resource type="PackedScene" uid="uid://oewb40hrl3ak" path="res://pickups/unknown_command/model.gltf" id="2_l0h2r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sb7ms"]
+size = Vector3(1.51013, 2.95114, 0.747131)
+
+[node name="UnknownCommand" node_paths=PackedStringArray("mesh", "collision_shape") instance=ExtResource("1_4d4ud")]
+fancy_name = "Unknown Command"
+id = 666
+mesh = NodePath("blockbench_export")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="blockbench_export" parent="." index="0" instance=ExtResource("2_l0h2r")]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0.000671387, 0, 0.000579834)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.91038e-11, 1.51942, 2.91038e-11)
+shape = SubResource("BoxShape3D_sb7ms")

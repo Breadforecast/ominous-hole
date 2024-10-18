@@ -8,7 +8,7 @@ const EPSILON := 0.5
 
 @export var commands: Commands
 
-var target_position: Vector2 
+var target_position: Vector2
 var target_rotation: float
 var pickable_items: Array[ROVPickup]
 
@@ -23,7 +23,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	rotation = rotate_toward(rotation, target_rotation, ROTATIONS_SPEED)
-	
+
 	var new_velocity = global_position.direction_to(target_position) * SPEED
 	if not _on_target_position():
 		velocity = new_velocity
@@ -55,7 +55,7 @@ func _on_target_position() -> bool:
 	var y_1 := global_position.y
 	var x_2 := target_position.x
 	var y_2 := target_position.y
-	return ((x_1 > x_2 - EPSILON and x_1 < x_2 + EPSILON) and 
+	return ((x_1 > x_2 - EPSILON and x_1 < x_2 + EPSILON) and
 			(y_1 > y_2 - EPSILON and y_1 < y_2 + EPSILON))
 
 

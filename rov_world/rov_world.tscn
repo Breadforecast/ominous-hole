@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bfhv3kah7wri4"]
+[gd_scene load_steps=8 format=3 uid="uid://bfhv3kah7wri4"]
 
 [ext_resource type="Script" path="res://rov_world/world.gd" id="1_i0nd0"]
 [ext_resource type="PackedScene" uid="uid://dnk1mawy8gd3l" path="res://rov/rov.tscn" id="2_r02ox"]
 [ext_resource type="Script" path="res://rov_world/static_body_2d.gd" id="4_oupq2"]
 [ext_resource type="PackedScene" uid="uid://ddona4q1brj5r" path="res://pickups/test_cube/test_cube.tscn" id="5_12alr"]
 [ext_resource type="PackedScene" uid="uid://dp8w73qu461yx" path="res://rov_pickup/rov_pickup.tscn" id="5_jmwjs"]
+[ext_resource type="PackedScene" uid="uid://d2gudkl8340jq" path="res://pickups/super_super_test_cube/super_super_test_cube.tscn" id="5_y51kg"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jkuv7"]
 vertices = PackedVector2Array(747.172, -99.1484, 830.227, 421.641, 457.063, 423.32, 487.039, -85.1094, -262.469, -102.781, 291.508, -80.9922, 286.094, 424.078, -308.523, 426.75)
@@ -55,7 +56,7 @@ position = Vector2(690, -44)
 
 [node name="ROVPickup" parent="." instance=ExtResource("5_jmwjs")]
 position = Vector2(276, 132)
-corresponding_3d_object = ExtResource("5_12alr")
+corresponding_3d_object = ExtResource("5_y51kg")
 
 [node name="ROVPickup2" parent="." instance=ExtResource("5_jmwjs")]
 position = Vector2(220, 140)

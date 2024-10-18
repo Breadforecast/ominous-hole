@@ -2,7 +2,7 @@ class_name Alien
 extends CharacterBody2D
 
 
-const SPEED := 75.0
+const SPEED := 25.0
 
 enum States {WANDER, CHASE}
 
@@ -24,12 +24,12 @@ func _physics_process(delta: float) -> void:
 	var direction := global_position.direction_to(next_path_position)
 	var new_velocity = direction * SPEED
 	player_ray_cast.target_position = to_local(rov.global_position)
-	
+
 	if player_ray_cast.is_colliding():
 		state = States.WANDER
 	else:
 		state = States.CHASE
-	
+
 	nav_agent.velocity = new_velocity
 
 
