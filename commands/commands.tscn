@@ -6,6 +6,7 @@
 script = ExtResource("1_agwvh")
 help_acceptable_inputs = Array[String](["h", "help"])
 help_text = "fucking idiot lmao"
-move_drone_acceptable_inputs = Array[String](["dr.move", "dr.mov", "drone.move", "drone.mov"])
-rotate_drone_acceptable_inputs = Array[String](["dr.rotate", "dr.rot", "drone.rot", "drone.rotate"])
+move_drone_acceptable_inputs = Array[String](["rov.move", "rov.mov"])
+rotate_drone_acceptable_inputs = Array[String](["rov.rotate", "rov.rot"])
+drone_pickup_acceptable_inputs = Array[String](["rov.pickup", "rov.pu"])
 clear_acceptable_inputs = Array[String](["clr", "clear"])

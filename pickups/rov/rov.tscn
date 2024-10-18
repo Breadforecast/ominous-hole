@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://brs34fd48p2vr"]
 
 [ext_resource type="PackedScene" uid="uid://beeg7udjeqdmk" path="res://pickups/base/pickup.tscn" id="1_a7xol"]
-[ext_resource type="Script" path="res://pickups/rov/rov_pickup.gd" id="2_v581k"]
+[ext_resource type="Script" path="res://pickups/rov/rov.gd" id="2_hhlbj"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_c76pg"]
 points = PackedVector3Array(0.260698, -0.505632, -0.42326, 0.0227831, 0.47607, 0.498884, 0.17089, 0.503959, 0.467493, -0.126753, 0.838402, -0.336337, -0.364459, -0.804331, 0.0823362, 0.293971, -0.843179, 0.203673, 0.499663, 0.476641, -0.00688856, -0.481564, 0.504316, -0.125485, -0.271818, -0.500627, -0.418992, -0.24294, -0.501666, 0.435845, -0.246363, 0.837643, 0.262211, 0.322752, 0.839775, -0.156876, 0.140822, 0.472733, -0.47957, 0.0835663, -0.879032, -0.279837, 0.288496, -0.502072, 0.406706, 0.499663, -0.476828, -0.00688856, -0.423285, 0.505542, 0.260728, -0.483867, -0.506689, 0.112229, 0.293971, 0.84318, 0.203673, 0.435884, 0.501707, -0.242842, -0.271818, 0.500628, -0.418992, 0.406665, 0.502131, 0.288511, -0.0669087, -0.839799, 0.352881, -0.450225, -0.50253, -0.213645, -0.037814, 0.977869, -0.0377665, -0.125502, -0.504245, -0.48159, -0.250623, -0.851674, -0.250499, -0.0375813, -0.972902, 0.0535056, 0.322753, -0.839776, -0.156876, -0.33635, 0.838397, -0.126715, 0.0227831, -0.47607, 0.498884, -0.183533, 0.47153, 0.464691)
@@ -14,8 +14,8 @@ material = SubResource("StandardMaterial3D_pxggx")
 rings = 1
 
 [node name="ROV" node_paths=PackedStringArray("mesh", "collision_shape") instance=ExtResource("1_a7xol")]
-script = ExtResource("2_v581k")
-fancy_name = "Remotely Operated Vehicle"
+script = ExtResource("2_hhlbj")
+fancy_name = "R.O.V."
 id = 1
 mesh = NodePath("MeshInstance3D")
 collision_shape = NodePath("CollisionShape3D")

@@ -5,6 +5,7 @@ extends Node
 signal text_outputted(text: String)
 signal move_drone(units: float)
 signal rotate_drone(degrees: float)
+signal drone_pickup
 signal clear_terminal
 
 @export_category("Help Command")
@@ -14,6 +15,8 @@ signal clear_terminal
 @export var move_drone_acceptable_inputs: Array[String]
 @export_category("Rotate Drone Command")
 @export var rotate_drone_acceptable_inputs: Array[String]
+@export_category("Drone Pickup Command")
+@export var drone_pickup_acceptable_inputs: Array[String]
 @export_category("Clear Command")
 @export var clear_acceptable_inputs: Array[String]
 
@@ -35,6 +38,10 @@ func send_command(command_text: String) -> void:
 		degrees = wrapf(degrees, -360.1, 360.1)
 		rotate_drone.emit(degrees)
 		text_outputted.emit("Rotated R.O.V. %s degrees." % degrees)
+		return
+	if split_command_text[0] in drone_pickup_acceptable_inputs:
+		drone_pickup.emit()
+		text_outputted.emit("Attempting drone pickup...")
 		return
 	if split_command_text[0] in clear_acceptable_inputs:
 		clear_terminal.emit()

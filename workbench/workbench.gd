@@ -14,6 +14,18 @@ func _ready() -> void:
 	screen.get_node("SubViewport/CraftUI").current_recipe = preload("res://recipes/super_test_cube.tres")
 
 
+func extract_rov_materials() -> void:
+	var drone_available := false
+	for i in available_materials:
+		if available_materials[i] == 1:
+			drone_available = true
+	if not drone_available:
+		return
+	for i in Global.rov_inventory:
+		var s := i.instantiate()
+		s.global_position = global_position + Vector3(randf_range(-2, 2), 0, randf_range(-2, 2))
+
+
 func _on_area_entered(area: Area3D) -> void:
 	var area_owner = area.owner
 	if area_owner is Pickup:
@@ -38,7 +50,7 @@ func _on_area_entered(area: Area3D) -> void:
 					available_materials.erase(i)
 		var o := current_recipe.output.instantiate()
 		add_sibling(o)
-		o.transform = transform
+		o.global_position = global_position + Vector3(randf_range(-2, 2), 0, randf_range(-2, 2))
 		print("Materials after craft: %s" % available_materials)
 
 

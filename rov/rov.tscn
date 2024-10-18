@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnk1mawy8gd3l"]
+[gd_scene load_steps=5 format=3 uid="uid://dnk1mawy8gd3l"]
 
 [ext_resource type="Script" path="res://rov/rov.gd" id="1_x5j16"]
 [ext_resource type="Texture2D" uid="uid://o5yv6xrgpbrv" path="res://rov/rov.png" id="2_xb658"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1p6hx"]
 radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ext4e"]
+radius = 34.0147
 
 [node name="ROV" type="CharacterBody2D"]
 collision_layer = 0
@@ -13,8 +16,19 @@ script = ExtResource("1_x5j16")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
 texture = ExtResource("2_xb658")
+region_rect = Rect2(1.17, 0, 0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1p6hx")
 
 [node name="MoveDestination" type="Marker2D" parent="."]
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_ext4e")
+
+[connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
+[connection signal="area_exited" from="PickupArea" to="." method="_on_pickup_area_area_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://vrjisstavg2n"]
+[gd_scene load_steps=6 format=3 uid="uid://vrjisstavg2n"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_ykyjb"]
 [ext_resource type="PackedScene" uid="uid://dyjuoefvl2pxp" path="res://ui/player/player_ui.tscn" id="2_x8h3d"]
@@ -6,7 +6,18 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_skb4x"]
 height = 3.0
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_pivot", "camera", "raycast", "hold_point", "drop_point")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkfvj"]
+shading_mode = 0
+albedo_color = Color(0.882353, 0.733333, 0.0627451, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xl4qt"]
+material = SubResource("StandardMaterial3D_nkfvj")
+radius = 0.05
+height = 0.1
+radial_segments = 9
+rings = 4
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_pivot", "camera", "raycast", "hold_point", "drop_point", "drop_preview")]
 collision_layer = 0
 script = ExtResource("1_ykyjb")
 camera_pivot = NodePath("CameraPivot")
@@ -14,6 +25,7 @@ camera = NodePath("CameraPivot/Camera")
 raycast = NodePath("CameraPivot/RayCast3D")
 hold_point = NodePath("CameraPivot/HoldPoint")
 drop_point = NodePath("CameraPivot/SpringArm3D/DropPoint")
+drop_preview = NodePath("CameraPivot/SpringArm3D/DropPoint/DropPreview")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_skb4x")
@@ -35,6 +47,11 @@ transform = Transform3D(1, 0, 0, 0, -1, -2.83122e-07, 0, 2.83122e-07, -1, 0, 0, 
 spring_length = 3.0
 
 [node name="DropPoint" type="Node3D" parent="CameraPivot/SpringArm3D"]
+
+[node name="DropPreview" type="MeshInstance3D" parent="CameraPivot/SpringArm3D/DropPoint"]
+visible = false
+cast_shadow = 0
+mesh = SubResource("SphereMesh_xl4qt")
 
 [node name="Camera" type="Camera3D" parent="CameraPivot"]
 cull_mask = 1048573

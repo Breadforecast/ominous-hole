@@ -11,6 +11,7 @@ const CAMERA_CLAMP := deg_to_rad(85.0)
 @export var raycast: RayCast3D
 @export var hold_point: Node3D
 @export var drop_point: Node3D
+@export var drop_preview: MeshInstance3D
 
 var _input_dir: Vector2
 var _camera_input_direction := Vector2.ZERO
@@ -38,21 +39,23 @@ func _input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
-	if Input.is_action_just_pressed("interact"):
-		if raycast.is_colliding():
-			var area := raycast.get_collider()
-			var area_owner = area.owner
+	var can_interact := raycast.is_colliding() and not holding
+	%PlayerUI.set_input_visibility(can_interact)
+	if can_interact:
+		var area := raycast.get_collider()
+		var area_owner = area.owner
+		var can_pickup_item := area_owner is Pickup and not holding
+		if Input.is_action_just_pressed("interact"):
 			if area_owner is Screen:
 				area_owner.interacting = true
 				viewport_selected = area_owner.viewport
 				%PlayerUI.set_crosshair_visibility(false)
-			if area_owner is Pickup and not holding:
+			if can_pickup_item:
 				holding = area_owner
 				holding.get_parent().remove_child(holding)
 				hold_point.add_child(holding)
 				holding.position = Vector3.ZERO
-				holding.rotation = Vector3.ZERO
+				holding.rotation = Vector3.ZERO	
 	if Input.is_action_just_pressed("drop") and holding:
 		hold_point.remove_child(holding)
 		get_parent().add_child(holding)
@@ -72,6 +75,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED)
 	if is_camera_motion:
 		_camera_input_direction = event.screen_relative * mouse_sensitivity
+
+
+func _process(delta: float) -> void:
+	drop_preview.visible = is_instance_valid(holding)
 
 
 func _physics_process(delta: float) -> void:
