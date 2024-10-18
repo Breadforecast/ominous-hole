@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://ccir3r1kplenn" path="res://ui/terminal_theme.tres" id="1_f8fyp"]
 [ext_resource type="Script" path="res://terminal/terminal.gd" id="2_v4dqc"]
 [ext_resource type="PackedScene" uid="uid://ded1amtcs7sl" path="res://commands/commands.tscn" id="3_7sdc2"]
-[ext_resource type="PackedScene" uid="uid://bfhv3kah7wri4" path="res://drone_world/drone_world.tscn" id="4_gfqdd"]
+[ext_resource type="PackedScene" uid="uid://bfhv3kah7wri4" path="res://rov_world/rov_world.tscn" id="4_gfqdd"]
 
 [node name="Terminal" type="Control" node_paths=PackedStringArray("radar_viewport", "command_output", "command_input", "commands")]
 layout_mode = 3

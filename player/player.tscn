@@ -7,6 +7,7 @@
 height = 3.0
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_pivot", "camera", "raycast", "hold_point", "drop_point")]
+collision_layer = 0
 script = ExtResource("1_ykyjb")
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera")
@@ -25,12 +26,13 @@ transform = Transform3D(0.857607, 0, -0.514305, 0.225715, 0.898549, 0.376381, 0.
 
 [node name="RayCast3D" type="RayCast3D" parent="CameraPivot"]
 target_position = Vector3(0, 0, -7)
+collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, -1, -2.83122e-07, 0, 2.83122e-07, -1, 0, 0, 0)
-spring_length = 7.0
+spring_length = 3.0
 
 [node name="DropPoint" type="Node3D" parent="CameraPivot/SpringArm3D"]
 
@@ -38,3 +40,4 @@ spring_length = 7.0
 cull_mask = 1048573
 
 [node name="PlayerUI" parent="." instance=ExtResource("2_x8h3d")]
+unique_name_in_owner = true

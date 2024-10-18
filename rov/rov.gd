@@ -20,14 +20,12 @@ func _ready() -> void:
 
 
 func move_drone(units: float) -> void:
-	target_position = global_position - Vector2(0.0, units).rotated(rotation)
-	print("Drone moved!")
+	target_position = global_position - Vector2(0.0, units * 10.0).rotated(rotation)
 
 
 func rotate_drone(degrees: float) -> void:
 	var new_rotation_radians := rotation + deg_to_rad(degrees)
 	target_rotation = new_rotation_radians
-	print("Drone rotated!")
 
 
 func _on_target_position() -> bool:

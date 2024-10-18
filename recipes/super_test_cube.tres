@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=3 format=3 uid="uid://4dxr3jwu17ua"]
+
+[ext_resource type="PackedScene" uid="uid://c8pp3h3weubqy" path="res://pickups/super_test_cube.tscn" id="1_0w0ju"]
+[ext_resource type="Script" path="res://recipes/crafting_recipe.gd" id="2_kpnq6"]
+
+[resource]
+script = ExtResource("2_kpnq6")
+material_ids = Array[int]([256, 256])
+material_list_friendly = Array[String](["Cube 2x"])
+recipe_output_name = "Super Cube"
+output = ExtResource("1_0w0ju")

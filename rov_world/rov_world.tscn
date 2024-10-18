@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfhv3kah7wri4"]
+
+[ext_resource type="Script" path="res://rov_world/world.gd" id="1_i0nd0"]
+[ext_resource type="PackedScene" uid="uid://dnk1mawy8gd3l" path="res://rov/rov.tscn" id="2_r02ox"]
+[ext_resource type="PackedScene" uid="uid://d1kj187ej4rln" path="res://alien/alien.tscn" id="3_dmndv"]
+[ext_resource type="Script" path="res://rov_world/static_body_2d.gd" id="4_oupq2"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jkuv7"]
+vertices = PackedVector2Array(747.172, -99.1484, 830.227, 421.641, 457.063, 423.32, 487.039, -85.1094, -262.469, -102.781, 291.508, -80.9922, 286.094, 424.078, -308.523, 426.75)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 7, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-418, -259, 940, -262, 1008, 613, -591, 577)])
+source_geometry_mode = 1
+source_geometry_group_name = &"nav_mesh"
+agent_radius = 49.0
+
+[node name="ROVWorld" type="Node2D" node_paths=PackedStringArray("aliens_node", "rov")]
+script = ExtResource("1_i0nd0")
+aliens_node = NodePath(".")
+rov = NodePath("ROV")
+
+[node name="ROV" parent="." instance=ExtResource("2_r02ox")]
+position = Vector2(274, 182)
+
+[node name="Camera2D" type="Camera2D" parent="ROV"]
+
+[node name="Alien" parent="." node_paths=PackedStringArray("wander_points") instance=ExtResource("3_dmndv")]
+position = Vector2(568, 168)
+wander_points = NodePath("../WanderPoints")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_jkuv7")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="NavigationRegion2D" groups=["nav_mesh"]]
+script = ExtResource("4_oupq2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
+polygon = PackedVector2Array(-322, -152, 789, -148, 889, 479, 986, 473, 913, -241, -297, -240)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
+polygon = PackedVector2Array(-306, -168, -362, 476, 975, 470, 986, 589, -527, 551, -390, -194)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
+polygon = PackedVector2Array(340, -33, 435, -35, 407, 440, 335, 433)
+
+[node name="WanderPoints" type="Node2D" parent="."]
+
+[node name="WanderPoint" type="Marker2D" parent="WanderPoints"]
+position = Vector2(-151, -37)
+
+[node name="WanderPoint2" type="Marker2D" parent="WanderPoints"]
+position = Vector2(-158, 364)
+
+[node name="WanderPoint3" type="Marker2D" parent="WanderPoints"]
+position = Vector2(758, 369)
+
+[node name="WanderPoint4" type="Marker2D" parent="WanderPoints"]
+position = Vector2(690, -44)

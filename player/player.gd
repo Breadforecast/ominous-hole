@@ -34,6 +34,7 @@ func _input(event: InputEvent) -> void:
 		if viewport_selected:
 			viewport_selected.owner.interacting = false
 			viewport_selected = null
+			%PlayerUI.set_crosshair_visibility(true)
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -45,6 +46,7 @@ func _input(event: InputEvent) -> void:
 			if area_owner is Screen:
 				area_owner.interacting = true
 				viewport_selected = area_owner.viewport
+				%PlayerUI.set_crosshair_visibility(false)
 			if area_owner is Pickup and not holding:
 				holding = area_owner
 				holding.get_parent().remove_child(holding)

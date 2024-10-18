@@ -50,6 +50,31 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.01
 
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MaxFPSContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MaxFPSLabel" type="Label" parent="VBoxContainer/VBoxContainer/MaxFPSContainer"]
+layout_mode = 2
+text = "Max FPS:"
+
+[node name="MaxFPSValueLabel" type="Label" parent="VBoxContainer/VBoxContainer/MaxFPSContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "60"
+
+[node name="MaxFPSSlider" type="HSlider" parent="VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 360.0
+value = 1.0
+
 [node name="ButtonsContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 alignment = 1
@@ -62,5 +87,6 @@ text = "Apply"
 layout_mode = 2
 text = "Confirm"
 
+[connection signal="value_changed" from="VBoxContainer/VBoxContainer/MaxFPSSlider" to="." method="_on_max_fps_slider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/ButtonsContainer/ApplyButton" to="." method="_on_apply_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonsContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
