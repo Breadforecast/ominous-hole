@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfhv3kah7wri4"]
+[gd_scene load_steps=9 format=3 uid="uid://bfhv3kah7wri4"]
 
 [ext_resource type="Script" path="res://rov_world/world.gd" id="1_i0nd0"]
 [ext_resource type="PackedScene" uid="uid://dnk1mawy8gd3l" path="res://rov/rov.tscn" id="2_r02ox"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ddona4q1brj5r" path="res://pickups/test_cube/test_cube.tscn" id="5_12alr"]
 [ext_resource type="PackedScene" uid="uid://dp8w73qu461yx" path="res://rov_pickup/rov_pickup.tscn" id="5_jmwjs"]
 [ext_resource type="PackedScene" uid="uid://d2gudkl8340jq" path="res://pickups/super_super_test_cube/super_super_test_cube.tscn" id="5_y51kg"]
+[ext_resource type="PackedScene" uid="uid://d1kj187ej4rln" path="res://alien/alien.tscn" id="7_4fali"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jkuv7"]
 vertices = PackedVector2Array(747.172, -99.1484, 830.227, 421.641, 457.063, 423.32, 487.039, -85.1094, -262.469, -102.781, 291.508, -80.9922, 286.094, 424.078, -308.523, 426.75)
@@ -20,10 +21,13 @@ script = ExtResource("1_i0nd0")
 aliens_node = NodePath(".")
 rov = NodePath("ROV")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(240, 150)
+
 [node name="ROV" parent="." instance=ExtResource("2_r02ox")]
 position = Vector2(274, 182)
-
-[node name="Camera2D" type="Camera2D" parent="ROV"]
+collision_layer = 2
+collision_mask = 3
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_jkuv7")
@@ -54,6 +58,9 @@ position = Vector2(758, 369)
 [node name="WanderPoint4" type="Marker2D" parent="WanderPoints"]
 position = Vector2(690, -44)
 
+[node name="WanderPoint5" type="Marker2D" parent="WanderPoints"]
+position = Vector2(281, 235)
+
 [node name="ROVPickup" parent="." instance=ExtResource("5_jmwjs")]
 position = Vector2(276, 132)
 corresponding_3d_object = ExtResource("5_y51kg")
@@ -62,3 +69,15 @@ corresponding_3d_object = ExtResource("5_y51kg")
 position = Vector2(220, 140)
 importance = 1
 corresponding_3d_object = ExtResource("5_12alr")
+
+[node name="Alien" parent="." instance=ExtResource("7_4fali")]
+position = Vector2(695, 114)
+
+[node name="Alien2" parent="." instance=ExtResource("7_4fali")]
+position = Vector2(594, 295)
+
+[node name="Alien3" parent="." instance=ExtResource("7_4fali")]
+position = Vector2(792, 301)
+
+[node name="Alien4" parent="." instance=ExtResource("7_4fali")]
+position = Vector2(608, 43)

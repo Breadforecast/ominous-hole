@@ -1,33 +1,109 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1kj187ej4rln"]
+[gd_scene load_steps=8 format=3 uid="uid://d1kj187ej4rln"]
 
 [ext_resource type="Script" path="res://alien/alien.gd" id="1_0kwxc"]
 [ext_resource type="Texture2D" uid="uid://dp5yjsh0ed2dd" path="res://alien/enemy.png" id="2_tt1do"]
-[ext_resource type="AudioStream" uid="uid://bix7o6ishbomw" path="res://alien/untitled.mp3" id="3_s6bks"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m5id7"]
 radius = 12.0416
 
-[node name="Alien" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_vatx3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainBodySprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8f683"]
+resource_name = "radar_ping"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainBodySprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.83333, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.83333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"update_radar_previous_sprite_position"
+}, {
+"args": [],
+"method": &"update_main_body_sprite_position"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w0swx"]
+_data = {
+"RESET": SubResource("Animation_vatx3"),
+"radar_ping": SubResource("Animation_8f683")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cs63m"]
+radius = 153.013
+
+[node name="Alien" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "player_pos_ray_cast", "main_body_sprite", "radar_previous_sprite", "animation_player")]
 script = ExtResource("1_0kwxc")
-
-[node name="Alien" type="Sprite2D" parent="."]
-texture = ExtResource("2_tt1do")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_m5id7")
+nav_agent = NodePath("NavAgent")
+player_pos_ray_cast = NodePath("PlayerPosRayCast")
+main_body_sprite = NodePath("MainBodySprite")
+radar_previous_sprite = NodePath("RadarPreviousSprite")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="NavAgent" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
 avoidance_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
-[node name="PlayerRayCast" type="RayCast2D" parent="."]
+[node name="PlayerPosRayCast" type="RayCast2D" parent="."]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_s6bks")
-autoplay = true
-panning_strength = 0.0
-bus = &"Terminal"
+[node name="MainBodySprite" type="Sprite2D" parent="."]
+top_level = true
+texture = ExtResource("2_tt1do")
+
+[node name="RadarPreviousSprite" type="Sprite2D" parent="."]
+top_level = true
+texture = ExtResource("2_tt1do")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m5id7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_w0swx")
+}
+
+[node name="PlayerDetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape2D" parent="PlayerDetectionArea"]
+shape = SubResource("CircleShape2D_cs63m")
 
 [connection signal="navigation_finished" from="NavAgent" to="." method="_on_nav_agent_navigation_finished"]
 [connection signal="velocity_computed" from="NavAgent" to="." method="_on_nav_agent_velocity_computed"]
+[connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="PlayerDetectionArea" to="." method="_on_detection_area_body_exited"]
