@@ -29,7 +29,7 @@ metadata/_edit_lock_ = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.882353, 0.733333, 0.0627451, 1)
 theme_override_font_sizes/font_size = 32
-text = "ScreamJam 2024 Game"
+text = "rov.abscond"
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2

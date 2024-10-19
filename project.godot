@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 [autoload]
 
 Global="*res://global.gd"
+Shaker="*res://addons/shaker/src/Shaker.gd"
 
 [display]
 
@@ -25,7 +26,7 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Panel3D/plugin.cfg")
+enabled=PackedStringArray("res://addons/Panel3D/plugin.cfg", "res://addons/shaker/plugin.cfg")
 
 [global_group]
 
@@ -76,6 +77,7 @@ drop={
 2d_physics/layer_2="Entities"
 3d_physics/layer_2="Pickups"
 2d_physics/layer_3="Items"
+2d_physics/layer_4="Sounds"
 
 [physics]
 

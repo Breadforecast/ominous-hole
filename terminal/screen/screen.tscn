@@ -40,9 +40,6 @@ size_2d_override_stretch = true
 
 [node name="Terminal" parent="SubViewport" instance=ExtResource("1_7xeda")]
 
-[node name="SubViewport" parent="SubViewport/Terminal/PanelContainer/TerminalContainer/PanelContainer/RadarView" index="0"]
-size = Vector2i(2, 2)
-
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamMicrophone_1mowe")
 

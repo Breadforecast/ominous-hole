@@ -2,9 +2,10 @@ class_name Alien
 extends CharacterBody2D
 
 
-const SPEED := 5.0
+const WANDER_SPEED := 0#30.0
+const CHASE_SPEED := 0#60.0
 
-enum States {WANDER, CHASE}
+enum States {WANDER, INVESTIGATE, CHASE}
 
 @export var wander_nav_points: Node2D
 @export_category("Dependencies")
@@ -16,10 +17,15 @@ enum States {WANDER, CHASE}
 
 var rov: ROV
 var current_state := States.WANDER: set = set_current_state
+var speed := WANDER_SPEED
+var investigation_point: Vector2
 var _last_position: Vector2
 
 
 func _ready() -> void:
+	_last_position = global_position
+	radar_previous_sprite.global_position = global_position
+	main_body_sprite.global_position = global_position
 	animation_player.play("radar_ping")
 	_on_nav_agent_navigation_finished()
 
@@ -27,10 +33,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var next_path_position := nav_agent.get_next_path_position()
 	var direction := global_position.direction_to(next_path_position)
-	var new_velocity = direction * SPEED
-	player_pos_ray_cast.target_position = to_local(rov.global_position)
+	var new_velocity = direction * WANDER_SPEED
+	if is_instance_valid(rov):
+		player_pos_ray_cast.target_position = to_local(rov.global_position)
 
 	nav_agent.velocity = new_velocity
+	$PlayerDetectionArea.rotation = velocity.angle()
 
 
 func set_current_state(value: States) -> void:
@@ -38,8 +46,13 @@ func set_current_state(value: States) -> void:
 	match current_state:
 		States.WANDER:
 			print("State set: Wandering")
+			speed = WANDER_SPEED
+		States.INVESTIGATE:
+			print("State set: Investigate")
+			speed = CHASE_SPEED
 		States.CHASE:
 			print("State set: Chasing")
+			speed = CHASE_SPEED
 	if not is_node_ready():
 		await ready
 	_on_nav_agent_navigation_finished()
@@ -65,6 +78,11 @@ func _on_nav_agent_navigation_finished() -> void:
 				push_error("Wander Nav Points not found!")
 				target_position = Vector2.ZERO
 			_make_path(target_position)
+		States.INVESTIGATE:
+			if not global_position == investigation_point:
+				_make_path(investigation_point)
+			else:
+				current_state = States.WANDER
 		States.CHASE:
 			_make_path(rov.global_position)
 
@@ -87,3 +105,8 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	if body is ROV and not player_pos_ray_cast.is_colliding():
 		current_state = States.WANDER
+
+
+func _on_hearing_area_entered(area: Area2D) -> void:
+	investigation_point = area.global_position
+	current_state = States.INVESTIGATE

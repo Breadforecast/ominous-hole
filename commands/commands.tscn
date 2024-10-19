@@ -9,4 +9,7 @@ help_text = "fucking idiot lmao"
 move_drone_acceptable_inputs = Array[String](["rov.move", "rov.mov"])
 rotate_drone_acceptable_inputs = Array[String](["rov.rotate", "rov.rot"])
 drone_pickup_acceptable_inputs = Array[String](["rov.pickup", "rov.pu"])
+drone_bomb_acceptable_inputs = Array[String](["bmb.deploy", "bmb.drop", "bmb.d"])
+drone_sound_emit_acceptable_inputs = Array[String](["snd.emit", "snd.e", "snd.play", "snd.p"])
+drone_gun_acceptable_inputs = Array[String](["gun.fire", "gun.shoot", "gun.kill"])
 clear_acceptable_inputs = Array[String](["clr", "clear"])

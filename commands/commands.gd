@@ -6,6 +6,9 @@ signal text_outputted(text: String)
 signal move_drone(units: float)
 signal rotate_drone(degrees: float)
 signal drone_pickup
+signal drone_bomb_drop
+signal drone_sound_emit
+signal drone_shoot
 signal clear_terminal
 signal spawn_unknown_command
 
@@ -18,9 +21,14 @@ signal spawn_unknown_command
 @export var rotate_drone_acceptable_inputs: Array[String]
 @export_category("Drone Pickup Command")
 @export var drone_pickup_acceptable_inputs: Array[String]
+@export_category("Drone Bomb Command")
+@export var drone_bomb_acceptable_inputs: Array[String]
+@export_category("Drone Sound Emit Command")
+@export var drone_sound_emit_acceptable_inputs: Array[String]
+@export_category("Drone Gun Command")
+@export var drone_gun_acceptable_inputs: Array[String]
 @export_category("Clear Command")
 @export var clear_acceptable_inputs: Array[String]
-
 
 func send_command(command_text: String) -> void:
 	command_text = command_text.to_lower()
@@ -42,13 +50,28 @@ func send_command(command_text: String) -> void:
 		return
 	if split_command_text[0] in drone_pickup_acceptable_inputs:
 		drone_pickup.emit()
-		text_outputted.emit("Attempting drone pickup...")
+		text_outputted.emit("Attempting item pickup...")
 		return
 	if split_command_text[0] in clear_acceptable_inputs:
 		clear_terminal.emit()
 		return
-	if split_command_text[0] in ["unknown.command"]:
+	if split_command_text[0] in drone_bomb_acceptable_inputs:
+		drone_bomb_drop.emit()
+		text_outputted.emit("Bomb deployed.")
+		return
+	if split_command_text[0] in drone_sound_emit_acceptable_inputs:
+		drone_sound_emit.emit()
+		text_outputted.emit("Now emitting sound.")
+		return
+	if split_command_text[0] in drone_gun_acceptable_inputs:
+		drone_shoot.emit()
+		text_outputted.emit("Firing gun.")
+		return
+	if command_text in ["unknown.command"]:
 		spawn_unknown_command.emit()
 		text_outputted.emit("Behind you.")
+		return
+	if command_text in ["null input"]:
+		text_outputted.emit("[color=green]null[/color][color=white] input[/color]")
 		return
 	text_outputted.emit("Unknown command.")

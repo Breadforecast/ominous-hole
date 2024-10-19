@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1kj187ej4rln"]
+[gd_scene load_steps=9 format=3 uid="uid://d1kj187ej4rln"]
 
 [ext_resource type="Script" path="res://alien/alien.gd" id="1_0kwxc"]
 [ext_resource type="Texture2D" uid="uid://dp5yjsh0ed2dd" path="res://alien/enemy.png" id="2_tt1do"]
@@ -61,10 +61,17 @@ _data = {
 "radar_ping": SubResource("Animation_8f683")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cs63m"]
-radius = 153.013
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cas5k"]
+radius = 28.5
+height = 166.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wukm2"]
+radius = 206.002
 
 [node name="Alien" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "player_pos_ray_cast", "main_body_sprite", "radar_previous_sprite", "animation_player")]
+scale = Vector2(1.5, 1.5)
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_0kwxc")
 nav_agent = NodePath("NavAgent")
 player_pos_ray_cast = NodePath("PlayerPosRayCast")
@@ -100,10 +107,29 @@ collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape" type="CollisionShape2D" parent="PlayerDetectionArea"]
-shape = SubResource("CircleShape2D_cs63m")
+[node name="CollisionShape" type="CollisionPolygon2D" parent="PlayerDetectionArea"]
+rotation = -4.71238
+polygon = PackedVector2Array(0, 0, -80, -239, 94, -239)
+
+[node name="CollisionShape2" type="CollisionPolygon2D" parent="PlayerDetectionArea"]
+rotation = -4.71238
+polygon = PackedVector2Array(0, 0, 40, 60, -40, 60)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
+position = Vector2(23, 0)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_cas5k")
+
+[node name="HearingArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HearingArea"]
+shape = SubResource("CircleShape2D_wukm2")
 
 [connection signal="navigation_finished" from="NavAgent" to="." method="_on_nav_agent_navigation_finished"]
 [connection signal="velocity_computed" from="NavAgent" to="." method="_on_nav_agent_velocity_computed"]
 [connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="area_entered" from="HearingArea" to="." method="_on_hearing_area_entered"]
