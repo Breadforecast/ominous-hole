@@ -1,5 +1,5 @@
 class_name Screen
-extends MeshInstance3D
+extends Node3D
 
 
 @export var viewport: SubViewport
@@ -16,7 +16,6 @@ func _input(event: InputEvent) -> void:
 		viewport.push_input(event)
 
 
-
 func set_interacting(value: bool) -> void:
 	interacting = value
 	camera.current = value
@@ -25,7 +24,6 @@ func set_interacting(value: bool) -> void:
 
 
 func _on_commands_spawn_unknown_command() -> void:
-	print("AHHHHH")
 	var s := pickup_scene.instantiate()
 	add_sibling(s)
 	s.global_position = pickup_location.global_position

@@ -10,7 +10,7 @@ var user_options := {
 	"max_fps": 1000, # Range of 1-360, steps of 1
 }
 
-var rov_inventory: Array[PackedScene] = [load("res://pickups/super_test_cube/super_test_ cube.tscn")]
+var rov_inventory: Array[PackedScene] = []
 
 
 func _ready() -> void:

@@ -82,6 +82,7 @@ animation_player = NodePath("AnimationPlayer")
 [node name="NavAgent" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
 avoidance_enabled = true
+debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
 [node name="PlayerPosRayCast" type="RayCast2D" parent="."]

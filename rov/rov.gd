@@ -2,15 +2,17 @@ class_name ROV
 extends CharacterBody2D
 
 
-const SPEED := 100.0
+enum States {IDLE, MOVING, ROTATING}
+
+const MOVE_SPEED := 100.0
 const ROTATIONS_SPEED := 1.25
 const BOMB_DISTANCE := 3.0
 const EPSILON := 0.5
 
 @export var bomb_scene: PackedScene
 @export var commands: Commands
-@export var walking_audible_area: Area2D
-@export var sound_emit_animation_player: AnimationPlayer
+
+var current_state := States.IDLE
 
 var target_position: Vector2
 var target_rotation: float
@@ -20,36 +22,57 @@ var shoot_area_targets: Array[Alien]
 
 func _ready() -> void:
 	target_position = global_position
-	if commands:
-		commands.move_drone.connect(move_drone)
-		commands.rotate_drone.connect(rotate_drone)
-		commands.drone_pickup.connect(pickup_item)
-		commands.drone_bomb_drop.connect(create_bomb)
-		commands.drone_sound_emit.connect(emit_sound)
-		commands.drone_shoot.connect(shoot)
+	target_rotation = global_rotation
+
+	if not is_instance_valid(commands):
+		return
+	commands.move_drone.connect(move_drone)
+	commands.rotate_drone.connect(rotate_drone)
+	commands.drone_pickup.connect(pickup_item)
+	commands.drone_bomb_drop.connect(create_bomb)
+	commands.drone_sound_emit.connect(emit_sound)
+	commands.drone_shoot.connect(shoot)
+	commands.drone_stop.connect(stop_drone)
 
 
 func _physics_process(delta: float) -> void:
-	rotation = rotate_toward(rotation, target_rotation, ROTATIONS_SPEED * delta)
-
-	var new_velocity = global_position.direction_to(target_position) * SPEED
-	if not _on_target_position():
-		velocity = new_velocity
-		print("Audible")
-	else:
-		velocity = Vector2.ZERO
-		target_position = global_position
-	walking_audible_area.monitorable = velocity.length() > 0.01
+	%WalkingAudibleArea.monitorable = velocity.length() > 0.01
+	match current_state:
+		States.IDLE:
+			stop_drone()
+		States.ROTATING:
+			stop_drone()
+			rotation = rotate_toward(rotation, target_rotation,
+					ROTATIONS_SPEED * delta)
+			if _at_target_rotation():
+				current_state = States.IDLE
+				stop_drone()
+		States.MOVING:
+			if _on_target_position() or %CollisionCheck.is_colliding():
+				stop_drone()
+				current_state = States.IDLE
+				return
+			var new_velocity = (global_position.direction_to(target_position) *
+					MOVE_SPEED)
+			velocity = new_velocity
 	move_and_slide()
 
 
 func move_drone(units: float) -> void:
-	target_position = global_position - Vector2(0.0, units * 10.0).rotated(rotation)
+	target_position = (global_position -
+			Vector2(0.0, units * 10.0).rotated(rotation))
+	current_state = States.MOVING
 
 
 func rotate_drone(degrees: float) -> void:
 	var new_rotation_radians := rotation + deg_to_rad(degrees)
 	target_rotation = new_rotation_radians
+	current_state = States.ROTATING
+
+
+func stop_drone() -> void:
+	velocity = Vector2.ZERO
+	target_position = global_position
 
 
 func pickup_item() -> void:
@@ -62,7 +85,8 @@ func pickup_item() -> void:
 
 func create_bomb() -> void:
 	var i := bomb_scene.instantiate()
-	i.global_position += global_position - Vector2(0.0, BOMB_DISTANCE * 10.0).rotated(rotation)
+	i.global_position += (global_position -
+			Vector2(0.0, BOMB_DISTANCE * 10.0).rotated(rotation))
 	i.detonated.connect(
 		func():
 			%BombShake.play_shake()
@@ -71,7 +95,7 @@ func create_bomb() -> void:
 
 
 func emit_sound() -> void:
-	sound_emit_animation_player.play("sound_emit")
+	%SoundEmitAnimationPlayer.play("sound_emit")
 
 
 func shoot() -> void:
@@ -85,7 +109,6 @@ func shoot() -> void:
 	alien.queue_free()
 
 
-
 func _on_target_position() -> bool:
 	var x_1 := global_position.x
 	var y_1 := global_position.y
@@ -93,6 +116,12 @@ func _on_target_position() -> bool:
 	var y_2 := target_position.y
 	return ((x_1 > x_2 - EPSILON and x_1 < x_2 + EPSILON) and
 			(y_1 > y_2 - EPSILON and y_1 < y_2 + EPSILON))
+
+
+func _at_target_rotation() -> bool:
+	var x_1 := rotation
+	var x_2 := target_rotation
+	return x_1 > x_2 - EPSILON and x_1 < x_2 + EPSILON
 
 
 func _on_pickup_area_area_entered(area: Area2D) -> void:

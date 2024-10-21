@@ -5,10 +5,17 @@
 [node name="Commands" type="Node"]
 script = ExtResource("1_agwvh")
 help_acceptable_inputs = Array[String](["h", "help"])
-help_text = "fucking idiot lmao"
+help_text = "rov.move
+rov.rot
+rov.stop
+bmb.deploy
+snd.emit
+gun.fire
+clr"
 move_drone_acceptable_inputs = Array[String](["rov.move", "rov.mov"])
 rotate_drone_acceptable_inputs = Array[String](["rov.rotate", "rov.rot"])
 drone_pickup_acceptable_inputs = Array[String](["rov.pickup", "rov.pu"])
+drone_stop_acceptable_inputs = Array[String](["rov.stop"])
 drone_bomb_acceptable_inputs = Array[String](["bmb.deploy", "bmb.drop", "bmb.d"])
 drone_sound_emit_acceptable_inputs = Array[String](["snd.emit", "snd.e", "snd.play", "snd.p"])
 drone_gun_acceptable_inputs = Array[String](["gun.fire", "gun.shoot", "gun.kill"])

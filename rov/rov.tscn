@@ -21,6 +21,21 @@ radius = 63.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_y88au"]
 radius = 126.0
 
+[sub_resource type="Animation" id="Animation_rtd5c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:monitorable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_cop76"]
 resource_name = "sound_emit"
 length = 0.3
@@ -35,21 +50,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_rtd5c"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:monitorable")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cwjjv"]
@@ -82,13 +82,11 @@ ScaleShake = Array[ExtResource("5_jgfrs")]([])
 bake_internal = 64
 __follow_timeline = false
 
-[node name="ROV" type="CharacterBody2D" node_paths=PackedStringArray("walking_audible_area", "sound_emit_animation_player")]
+[node name="ROV" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_x5j16")
 bomb_scene = ExtResource("2_obyai")
-walking_audible_area = NodePath("WalkingAudibleArea")
-sound_emit_animation_player = NodePath("SoundEmitAudibleArea/SoundEmitAnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
@@ -109,6 +107,7 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_ext4e")
 
 [node name="WalkingAudibleArea" type="Area2D" parent="."]
+unique_name_in_owner = true
 visible = false
 collision_layer = 8
 collision_mask = 0
@@ -129,6 +128,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_y88au")
 
 [node name="SoundEmitAnimationPlayer" type="AnimationPlayer" parent="SoundEmitAudibleArea"]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_cwjjv")
 }
@@ -175,6 +175,10 @@ intensity = 10.0
 duration = 1.0
 fade_in = 0.0118415
 shakerPreset = SubResource("Resource_rx1js")
+
+[node name="CollisionCheck" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+target_position = Vector2(0, -8.5)
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="area_exited" from="PickupArea" to="." method="_on_pickup_area_area_exited"]

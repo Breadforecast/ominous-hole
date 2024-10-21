@@ -1,120 +1,33 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfhv3kah7wri4"]
+[gd_scene load_steps=5 format=3 uid="uid://bfhv3kah7wri4"]
 
 [ext_resource type="Script" path="res://rov_world/world.gd" id="1_i0nd0"]
+[ext_resource type="PackedScene" uid="uid://ddinl6mwa17ai" path="res://rov_world/map/map.tscn" id="2_ihfil"]
 [ext_resource type="PackedScene" uid="uid://dnk1mawy8gd3l" path="res://rov/rov.tscn" id="2_r02ox"]
-[ext_resource type="Texture2D" uid="uid://rn8s2p1x27cr" path="res://rov_world/map.png" id="2_woh2h"]
-[ext_resource type="Script" path="res://rov_world/static_body_2d.gd" id="4_oupq2"]
-[ext_resource type="PackedScene" uid="uid://ddona4q1brj5r" path="res://pickups/test_cube/test_cube.tscn" id="5_12alr"]
-[ext_resource type="PackedScene" uid="uid://dp8w73qu461yx" path="res://rov_pickup/rov_pickup.tscn" id="5_jmwjs"]
-[ext_resource type="PackedScene" uid="uid://d2gudkl8340jq" path="res://pickups/super_super_test_cube/super_super_test_cube.tscn" id="5_y51kg"]
-[ext_resource type="PackedScene" uid="uid://d1kj187ej4rln" path="res://alien/alien.tscn" id="7_4fali"]
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_jkuv7"]
-vertices = PackedVector2Array(747.172, -99.1484, 830.227, 421.641, 457.063, 423.32, 487.039, -85.1094, -262.469, -102.781, 291.508, -80.9922, 286.094, 424.078, -308.523, 426.75)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 7, 4, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-418, -259, 940, -262, 1008, 613, -591, 577)])
-source_geometry_mode = 1
-source_geometry_group_name = &"nav_mesh"
-agent_radius = 49.0
+[ext_resource type="PackedScene" uid="uid://d1kj187ej4rln" path="res://alien/alien.tscn" id="4_2ayrg"]
 
 [node name="ROVWorld" type="Node2D" node_paths=PackedStringArray("aliens_node", "rov")]
 script = ExtResource("1_i0nd0")
 aliens_node = NodePath(".")
 rov = NodePath("ROV")
 
-[node name="Map" type="Sprite2D" parent="."]
-texture = ExtResource("2_woh2h")
-metadata/_edit_lock_ = true
+[node name="Map" parent="." instance=ExtResource("2_ihfil")]
 
 [node name="ROV" parent="." instance=ExtResource("2_r02ox")]
-position = Vector2(-6720, -6663)
-rotation = 2.16507
+position = Vector2(896, 898)
+rotation = 2.02852
 scale = Vector2(1.5, 1.5)
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-navigation_polygon = SubResource("NavigationPolygon_jkuv7")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="NavigationRegion2D" groups=["nav_mesh"]]
-script = ExtResource("4_oupq2")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6725, -6610, -6671, -6596, -6671, -6583, -6691, -6560, -6677, -6518, -6686, -6477, -6796, -6477, -6809, -6463, -6841, -6461, -6843, -6494)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6708, -6690, -6658, -6663, -6627, -6664, -6597, -6697, -6520, -6708, -6500, -6717, -6474, -6748, -6478, -6757, -6505, -6768, -6504, -6781, -6488, -6795, -6513, -6822, -6668, -6753, -6713, -6707)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6470, -6831, -6465, -6829, -6453, -6835, -6437, -6854, -6415, -6863, -6394, -6888, -6396, -6912, -6363, -6926, -6472, -6945, -6472, -6862, -6460, -6854)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6365, -6926, -6386, -6852, -6326, -6688, -6306, -6680, -6275, -6688, -6234, -6739, -6213, -6780, -6215, -6823, -6241, -6922, -6242, -6963, -6232, -6994, -6209, -7024, -6178, -7047, -6001, -7132, -5968, -7136, -5925, -7131, -5849, -7134, -5805, -7143, -5757, -7168, -5712, -7190, -5666, -7189, -5638, -7180, -5605, -7158, -5575, -7121, -5565, -7096, -5572, -7033, -5574, -7025, -5570, -6987, -5528, -6841, -5511, -6802, -5472, -6737, -5443, -6697, -5428, -6682, -5412, -6683, -5391, -6701, -5300, -6852, -5235, -6941, -5198, -6976, -5096, -7044, -5046, -7095, -5030, -7132, -5027, -7195, -5027, -7259, -5003, -7305, -4940, -7357, -4882, -7390, -4830, -7409, -4818, -7412, -4814, -7503, -5100, -7497, -5381, -7497, -5790, -7494, -6204, -7454, -6373, -7421)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6844, -6490, -6896, -6434, -6893, -6409, -6900, -6404, -6910, -6400, -6925, -6420, -6928, -6402, -6972, -6371, -6991, -6353, -7008, -6357, -7028, -6386, -7033, -6395, -7067, -6409, -7080, -6430, -7071, -6450, -7354, -6731, -7353, -6831, -7256, -6922, -7217, -6892, -7306, -6801, -7305, -6751, -7036, -6480, -6933, -6475)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-7243, -6963, -7277, -6925, -7354, -6875, -7377, -6869, -7398, -6873, -7406, -6886, -7403, -6909, -7407, -6933, -7407, -6951, -7398, -6968)
-
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-7418, -6983, -7435, -6923, -7434, -6853, -7419, -6790, -7357, -6665, -7282, -6591, -7209, -6523, -7192, -6492, -7192, -6466, -7216, -6417, -7210, -6401, -7180, -6384, -7078, -6363, -7049, -6352, -7013, -6320, -6966, -6324, -6937, -6347, -6915, -6375, -6889, -6379, -6847, -6375, -6817, -6358, -6795, -6322, -6792, -6299, -6786, -6292, -6734, -6323, -6704, -6335, -6684, -6338, -6673, -6311, -6677, -6283, -6704, -6266, -6745, -6250, -6784, -6215, -6826, -6213, -6902, -6254, -7230, -6312, -7284, -6338, -7344, -6386, -7394, -6414, -7500, -6428, -7663, -6897)
-
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6299, -6670, -6320, -6642, -6324, -6629, -6322, -6615, -6307, -6605, -6306, -6596, -6327, -6570, -6337, -6555, -6340, -6543, -6336, -6536, -6317, -6538, -6288, -6560, -6252, -6603, -6233, -6630, -6190, -6666, -6157, -6696, -6140, -6737, -6137, -6774, -6142, -6792, -6150, -6795, -6171, -6769, -6192, -6724, -6235, -6678, -6266, -6661, -6288, -6663)
-
-[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6917, -5652, -6911, -5658, -6915, -5740, -6908, -5789, -6853, -5888, -6841, -5904, -6801, -5896, -6753, -5934, -6674, -5993, -6631, -6013, -6586, -6010, -6548, -6005, -6523, -6011, -6511, -6032, -6513, -6057, -6549, -6106, -6618, -6152, -6660, -6170, -6687, -6183, -6716, -6203, -6732, -6202, -6779, -6177, -6826, -6161, -6881, -6168, -6908, -6188, -6927, -6203, -6979, -6222, -7100, -6234, -7192, -6250, -7253, -6262, -7283, -6249, -7303, -6229, -7303, -6209, -7279, -6168, -7246, -6120, -7244, -6062, -7252, -6005, -7279, -5947, -7287, -5903, -7274, -5857, -7237, -5823, -7160, -5820, -7087, -5824, -7061, -5810, -7032, -5772, -7012, -5735, -6983, -5705, -6963, -5679, -6935, -5658)
-
-[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6705, -6268, -6695, -6242, -6703, -6232, -6702, -6215, -6717, -6198, -6782, -6241)
-
-[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6270, -6585, -6276, -6554, -6271, -6549, -6233, -6564)
-
-[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="NavigationRegion2D/StaticBody2D"]
-polygon = PackedVector2Array(-6922, -5636, -6895, -5634, -6866, -5645, -6845, -5680, -6832, -5757, -6820, -5802, -6796, -5840, -6759, -5871, -6696, -5904, -6615, -5935, -6523, -5952, -6458, -5948, -6410, -5925, -6363, -5881, -6327, -5825, -6279, -5724, -6243, -5652, -6187, -5547, -6089, -5445, -5989, -5359, -5949, -5324, -5920, -5286, -5893, -5232, -5868, -5120, -5854, -5033, -5853, -4948, -5845, -4909, -5770, -4704, -5694, -4452, -5655, -4318, -5643, -4229, -5639, -4082, -5633, -4012, -5608, -3925, -5526, -3801, -5459, -3716, -5426, -3652, -5408, -3589, -5416, -3534, -5431, -3460, -5385, -3515, -5370, -3518, -5362, -3492, -5341, -3506, -5332, -3534, -5312, -3545, -5284, -3550, -5207, -3632, -5196, -3588, -5194, -3511, -5218, -3428, -5245, -3387, -5240, -3332, -5234, -3288, -5249, -3258, -5275, -3249, -5284, -3224, -5276, -3199, -5285, -3182, -5324, -3167, -5332, -3150, -5360, -3143, -5360, -3219, -5384, -3173, -5428, -3115, -5467, -3048, -5497, -2944, -5513, -2813, -5520, -2714, -5536, -2629, -5572, -2526, -5598, -2447, -5595, -2368, -5591, -2310, -5597, -2259, -5619, -2222, -5580, -2252, -5576, -2248, -5576, -2230, -5572, -2219, -5582, -2194, -5596, -2168, -5556, -2160, -5541, -2137, -5526, -2082, -5496, -1990, -5445, -1926, -5366, -1869, -5331, -1849, -5290, -1809, -5254, -1756, -5237, -1724, -5222, -1672, -5215, -1614, -5219, -1586, -5243, -1539, -5286, -1512, -5359, -1487, -5448, -1468, -5514, -1451, -5586, -1421, -5661, -1372, -5784, -1270, -5889, -1151, -5978, -1049, -6008, -1030, -6050, -1020, -6116, -1041, -5787, -601, -5795, -587, -5843, -572, -5864, -574, -5877, -580, -5893, -576, -5904, -585, -5909, -613, -5970, -551, -6041, -502, -6102, -466, -6168, -415, -6121, -434, -6100, -447, -6093, -447, -6097, -428, -6082, -431, -6055, -443, -6034, -438, -6038, -425, -6061, -414, -6093, -405, -6064, -392, -6065, -367, -6081, -336, -6089, -302, -6106, -289, -6136, -267, -6166, -208, -6188, -138, -6198, -119, -6201, -78, -6184, -21, -6163, 29, -6160, 65, -6172, 91, -6208, 106, -6238, 130, -6207, 125, -6189, 121, -6167, 138, -6147, 140, -6134, 153, -6141, 174, -6152, 182, -6216, 223, -6249, 236, -6270, 255, -6277, 279, -6285, 292, -6333, 325, -6341, 358, -6347, 369, -6373, 392, -6388, 403, -6393, 400, -6411, 410, -6405, 428, -6414, 437, -6423, 437, -6434, 446, -6462, 461, -6438, 467, -6429, 479, -6437, 508, -6449, 529, -6469, 537, -6467, 556, -6493, 594, -6492, 604, -6529, 644, -6563, 661, -6594, 661, -6636, 659, -6673, 667, -6698, 679, -6716, 711, -6674, 687, -6639, 690, -6606, 705, -6608, 731, -6631, 760, -6656, 785, -6687, 840, -6702, 892, -6722, 911, -6701, 923, -6677, 929, -6674, 948, -6661, 958, -6659, 971, -6678, 1001, -6731, 1062, -6790, 1169, -6833, 1277, -6864, 1371, -6877, 1419, -6873, 1443, -6859, 1434, -6850, 1406, -6840, 1400, -6831, 1412, -6840, 1439, -6834, 1453, -6823, 1457, -6823, 1470, -6842, 1486, -6860, 1489, -6859, 1519, -6871, 1527, -6886, 1519, -6908, 1545, -6922, 1550, -6927, 1516, -6925, 1488, -6945, 1481, -6961, 1493, -6953, 1512, -6966, 1536, -6995, 1555, -6995, 1576, -6987, 1622, -6971, 1653, -6954, 1701, -6956, 1745, -6910, 1746, -6908, 1788, -6884, 1889, -6870, 1978, -6873, 2028, -6887, 2051, -6910, 2054, -6919, 2073, -6881, 2143, -6871, 2175, -6860, 2231, -6857, 2318, -6863, 2390, -6871, 2455, -6856, 2507, -6800, 2590, -6760, 2667, -6728, 2759, -6709, 2890, -6722, 3023, -6743, 3115, -6791, 3233, -6860, 3319, -6876, 3374, -6904, 3410, -6941, 3416, -6931, 3425, -6933, 3445, -6951, 3459, -6941, 3500, -6998, 3638, -7047, 3775, -7053, 3910, -7023, 4029, -6978, 4153, -6961, 4191, -6950, 4227, -6907, 4305, -6829, 4401, -6764, 4481, -6727, 4531, -6680, 4632, -6660, 4725, -6661, 4841, -6633, 5003, -6613, 5114, -6551, 5272, -6480, 5401, -6405, 5538, -6329, 5621, -6230, 5698, -6121, 5760, -6054, 5799, -6014, 5844, -5997, 5892, -6002, 5947, -6059, 6006, -6113, 6029, -6198, 6019, -6388, 5933, -6520, 5910, -6614, 5901, -6680, 5890, -6739, 5910, -6865, 5995, -6971, 6092, -6927, 6075, -6908, 6147, -6907, 6181, -6925, 6255, -6933, 6363, -6947, 6375, -6980, 6359, -7021, 6313, -7034, 6296, -7024, 6256, -7068, 6260, -7055, 6269, -7067, 6312, -7046, 6368, -7094, 6441, -7089, 6495, -7128, 6486, -7114, 6503, -7108, 6557, -7051, 6537, -7037, 6548, -7037, 6595, -7080, 6622, -7057, 6623, -7061, 6655, -7067, 6670, -7039, 6720, -7025, 6820, -7008, 6894, -6952, 6964, -6897, 6978, -6807, 6978, -6747, 7004, -6693, 7058, -6650, 7126, -6624, 7197, -6608, 7286, -6591, 7361, -6551, 7382, -6478, 7359, -6421, 7330, -6332, 7323, -6250, 7350, -6208, 7387, -6183, 7428, -6155, 7489, -6137, 7500, -6095, 7491, -5993, 7433, -5931, 7386, -5958, 7366, -5973, 7316, -5958, 7258, -5884, 7226, -5837, 7200, -5809, 7125, -5797, 7056, -5736, 7018, -5718, 6941, -5696, 6859, -5684, 6851, -5665, 6874, -5642, 6883, -5614, 6930, -5625, 6955, -5670, 7020, -5681, 7134, -5674, 7205, -5686, 7279, -5682, 7354, -5658, 7397, -5633, 7415, -5601, 7397, -5428, 8404, -9854, 8425, -7731, -5863)
 
 [node name="WanderPoints" type="Node2D" parent="."]
 
-[node name="WanderPoint" type="Marker2D" parent="WanderPoints"]
-position = Vector2(-151, -37)
+[node name="Marker2D" type="Marker2D" parent="WanderPoints"]
+position = Vector2(1037, 1135)
 
-[node name="WanderPoint2" type="Marker2D" parent="WanderPoints"]
-position = Vector2(-158, 364)
+[node name="Marker2D2" type="Marker2D" parent="WanderPoints"]
+position = Vector2(1132, 1499)
 
-[node name="WanderPoint3" type="Marker2D" parent="WanderPoints"]
-position = Vector2(758, 369)
+[node name="Marker2D3" type="Marker2D" parent="WanderPoints"]
+position = Vector2(1080, 793)
 
-[node name="WanderPoint4" type="Marker2D" parent="WanderPoints"]
-position = Vector2(690, -44)
-
-[node name="WanderPoint5" type="Marker2D" parent="WanderPoints"]
-position = Vector2(281, 235)
-
-[node name="ROVPickup" parent="." instance=ExtResource("5_jmwjs")]
-position = Vector2(276, 132)
-corresponding_3d_object = ExtResource("5_y51kg")
-
-[node name="ROVPickup2" parent="." instance=ExtResource("5_jmwjs")]
-position = Vector2(220, 140)
-importance = 1
-corresponding_3d_object = ExtResource("5_12alr")
-
-[node name="Alien" parent="." node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("7_4fali")]
-visible = false
-position = Vector2(695, 114)
-wander_nav_points = NodePath("../WanderPoints")
-
-[node name="Alien2" parent="." node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("7_4fali")]
-visible = false
-position = Vector2(594, 295)
-wander_nav_points = NodePath("../WanderPoints")
-
-[node name="Alien3" parent="." node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("7_4fali")]
-visible = false
-position = Vector2(792, 301)
-wander_nav_points = NodePath("../WanderPoints")
-
-[node name="Alien4" parent="." node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("7_4fali")]
-visible = false
-position = Vector2(608, 43)
+[node name="Alien" parent="." node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(1037, 1137)
 wander_nav_points = NodePath("../WanderPoints")

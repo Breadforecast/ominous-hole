@@ -3,7 +3,7 @@ extends Area3D
 
 signal materials_updated(new_materials: Dictionary)
 
-const CRAFT_SPREAD := 0.5
+const CRAFT_SPREAD := 0.1
 
 @export var recipe_list: PackedScene
 @export var panel_3d: Panel3D
@@ -39,7 +39,7 @@ func extract_rov_materials() -> void:
 func create_item(item: PackedScene) -> void:
 	var o := item.instantiate()
 	add_sibling(o)
-	o.global_position = global_position + Vector3(
+	o.global_position = $CollisionShape3D.global_position + Vector3(
 			randf_range(-CRAFT_SPREAD, CRAFT_SPREAD),
 			randf_range(-CRAFT_SPREAD, CRAFT_SPREAD), 0.0)
 

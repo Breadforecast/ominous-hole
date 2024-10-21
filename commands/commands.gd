@@ -9,6 +9,7 @@ signal drone_pickup
 signal drone_bomb_drop
 signal drone_sound_emit
 signal drone_shoot
+signal drone_stop
 signal clear_terminal
 signal spawn_unknown_command
 
@@ -21,6 +22,8 @@ signal spawn_unknown_command
 @export var rotate_drone_acceptable_inputs: Array[String]
 @export_category("Drone Pickup Command")
 @export var drone_pickup_acceptable_inputs: Array[String]
+@export_category("Drone Stop Command")
+@export var drone_stop_acceptable_inputs: Array[String]
 @export_category("Drone Bomb Command")
 @export var drone_bomb_acceptable_inputs: Array[String]
 @export_category("Drone Sound Emit Command")
@@ -58,6 +61,10 @@ func send_command(command_text: String) -> void:
 	if split_command_text[0] in drone_bomb_acceptable_inputs:
 		drone_bomb_drop.emit()
 		text_outputted.emit("Bomb deployed.")
+		return
+	if split_command_text[0] in drone_stop_acceptable_inputs:
+		drone_stop.emit()
+		text_outputted.emit("Drone stopped.")
 		return
 	if split_command_text[0] in drone_sound_emit_acceptable_inputs:
 		drone_sound_emit.emit()
