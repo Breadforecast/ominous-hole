@@ -158,7 +158,6 @@ shape = SubResource("CircleShape2D_ik648")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-1.62274e-05, 9.08971e-06)
-zoom = Vector2(0.5, 0.5)
 
 [node name="GunShake" type="Node2D" parent="Camera2D"]
 unique_name_in_owner = true
@@ -178,7 +177,7 @@ shakerPreset = SubResource("Resource_rx1js")
 
 [node name="CollisionCheck" type="RayCast2D" parent="."]
 unique_name_in_owner = true
-target_position = Vector2(0, -8.5)
+target_position = Vector2(0, -10)
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="area_exited" from="PickupArea" to="." method="_on_pickup_area_area_exited"]

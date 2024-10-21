@@ -1,38 +1,26 @@
-[gd_scene load_steps=9 format=4 uid="uid://dil35frmlrgr7"]
+[gd_scene load_steps=8 format=3 uid="uid://dil35frmlrgr7"]
 
 [ext_resource type="PackedScene" uid="uid://mgocrg1ae4ua" path="res://terminal/terminal.tscn" id="1_7xeda"]
 [ext_resource type="Script" path="res://terminal/screen/screen.gd" id="1_wvj26"]
 [ext_resource type="PackedScene" uid="uid://cuf482xqiqi7q" path="res://pickups/unknown_command/unknown_command.tscn" id="2_1nkb8"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_86o6m"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_mwmpn"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ssbb"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sotgq"]
 resource_local_to_scene = true
-emission_enabled = true
-emission_energy_multiplier = 2.0
-emission_texture = SubResource("ViewportTexture_86o6m")
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_mwmpn")
+texture_filter = 0
+texture_repeat = false
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_52u3g"]
+[sub_resource type="QuadMesh" id="QuadMesh_ni1lr"]
 resource_local_to_scene = true
-_surfaces = [{
-"aabb": AABB(0.693394, -0.922803, -0.922803, 0.100169, 1.84561, 1.84561),
-"attribute_data": PackedByteArray("fGZ8RoKZfEZ8ZoJ5gpmCef9/gnn/f3xGfGb/X3xm/1+Cmf9fgpn/X/9//1//f/9fPXOCeT1zgnk9c3xGPXN8Rj1z/189c/9fPXP/Xz1z/1/BjIJ5wYyCecGMfEbBjHxGwYz/X8GM/1/BjP9fwYz/X4KZPlOCmT5T/38+U/9/PlN8Zj5TfGY+Uz1zPlM9cz5TPXM+Uz1zPlPBjD5TwYw+U8GMPlPBjD5TfGbBbHxmwWyCmcFsgpnBbP9/wWz/f8FsPXPBbD1zwWw9c8FsPXPBbMGMwWzBjMFswYzBbMGMwWw="),
-"format": 34896613399,
-"index_count": 96,
-"index_data": PackedByteArray("KAABAB0AKAAXAAEAIwAFAB4AIwAOAAUAMwALAC8AMwATAAsANAAJACwANAAZAAkAKgARADAAKgAHABEAIQAPACQAIQAAAA8ALwAbADcALwALABsAHgAWACcAHgAFABYACgApABoACgAfACkABgAiABAABgAgACIAEgAfAAoAEgAlAB8AGAAcAAgAGAAmABwABAA1ABQABAAuADUAAgAyAA0AAgArADIAFQAtAAMAFQA2AC0ADAAuAAQADAAxAC4A"),
-"lods": [0.105357, PackedByteArray("FgABABwABAAWABwABAAcAAgABAAFABYABAAIACwAFAAEACwAFAAsAAMADAAFAAQADAAgAAUAIAAOAAUAIAAAAA4ABgAgAAwAKgAGAAwAAgAqAAwA")],
-"material": SubResource("StandardMaterial3D_5ssbb"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 56,
-"vertex_data": PackedByteArray("AAAAAP//0tEAAP/////51gAAAAAAAMDWAAD//wAABdkAAP9/AAAA2QAA/3///9fRAAAAAP9/WM8AAAAA/38Q0gAA////f/bYAAD///9/N9j///9//38u1P///3//f3/WAAD/PwAAANkAAP8/AABV1QAA/z///9fRAAD/P///KdD//7RI/3/e0P//tEj/f3fT//+0SP9/LtT//7RI/39/1gAA/78AAADZAAD/vwAAcNcAAP+////X0QAA/7///1PV//9Kt/9/ktr//0q3/3/h2f//Srf/fy7U//9Kt/9/f9YAAP///78s2gAA////v6bYxc3/f0q319HFzf9/Srcu1AAAAAD/v0/OAAAAAP+/KdDFzbRISrezz8XNtEhKt9fRxc20SEq3xc7FzbRISrcu1MXNSrdKt/Hbxc1Kt0q319HFzUq3Srf51sXNSrdKty7UAAAAAP8/HtMAAAAA/z802AAA////PxPXAAD///8/cNfFzf9/tEgA2cXN/3+0SH/Wxc20SLRIq9TFzbRItEgA2cXNtEi0SMDWxc20SLRIf9bFzUq3tEib2MXNSre0SADZxc1Kt7RIHdbFzUq3tEh/1lgo0iv+KEQo2yjOLrUspinILMgscChwKAEqbS5zKPkvpSysJUQvJCX1KfUpXCtcK8gsyCzAKuQtcChwKF8q7CroJ0ovjCbJMPUp9SlcK1wryCzILK8ujChwKHAovypaJ/UqqCZhLUMm9Sn1KVwrXCtfK2smRycpKXAocCj1KfUpfivQLV8q7CqAKaIucChwKCgsIyr1KfUpkil3J3AocCj+KEQo9Sn1KQMnljD/JrQvnDBYJK8ujCjILMgsXCtcK/kkdDHILMgs2yjOLlwrXCvQLmklyCzILGswlSdcK1wr")
-}]
-
-[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_1mowe"]
+material = SubResource("StandardMaterial3D_sotgq")
+size = Vector2(0.878, 0.643)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pambf"]
-size = Vector3(0.503852, 1.89258, 1.87148)
+size = Vector3(1.05296, 1.04834, 0.168475)
 
 [node name="Screen" type="Node3D" node_paths=PackedStringArray("viewport", "terminal", "camera")]
 script = ExtResource("1_wvj26")
@@ -42,28 +30,26 @@ camera = NodePath("Mesh/Camera")
 pickup_scene = ExtResource("2_1nkb8")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -1)
-mesh = SubResource("ArrayMesh_52u3g")
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_ni1lr")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.959783, 0, 0.0544329)
-stream = SubResource("AudioStreamMicrophone_1mowe")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0402169, 0, 0.0544329)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Mesh"]
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742397, -0.0117188, 0.00101471)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00211668, 0.00659199, 0.0694695)
 shape = SubResource("BoxShape3D_pambf")
 
 [node name="Camera" type="Camera3D" parent="Mesh"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.08715, 0, 0.0054217)
-fov = 67.2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.389)
+fov = 29.3
 
 [node name="SubViewport" type="SubViewport" parent="."]
+canvas_item_default_texture_filter = 0
 size = Vector2i(1280, 720)
-size_2d_override = Vector2i(1280, 720)
-size_2d_override_stretch = true
 
 [node name="Terminal" parent="SubViewport" instance=ExtResource("1_7xeda")]

@@ -19,6 +19,10 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 Global="*res://global.gd"
 Shaker="*res://addons/shaker/src/Shaker.gd"
 
+[debug]
+
+shapes/collision/draw_2d_outlines=false
+
 [display]
 
 window/size/viewport_width=1280
@@ -81,7 +85,7 @@ drop={
 
 [navigation]
 
-2d/default_edge_connection_margin=100.0
+2d/use_edge_connections=false
 
 [physics]
 

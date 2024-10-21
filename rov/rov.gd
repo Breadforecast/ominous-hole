@@ -7,7 +7,8 @@ enum States {IDLE, MOVING, ROTATING}
 const MOVE_SPEED := 100.0
 const ROTATIONS_SPEED := 1.25
 const BOMB_DISTANCE := 3.0
-const EPSILON := 0.5
+const MOVE_EPSILON := 0.5
+const ROT_EPSILON := 0.01
 
 @export var bomb_scene: PackedScene
 @export var commands: Commands
@@ -114,14 +115,14 @@ func _on_target_position() -> bool:
 	var y_1 := global_position.y
 	var x_2 := target_position.x
 	var y_2 := target_position.y
-	return ((x_1 > x_2 - EPSILON and x_1 < x_2 + EPSILON) and
-			(y_1 > y_2 - EPSILON and y_1 < y_2 + EPSILON))
+	return ((x_1 > x_2 - MOVE_EPSILON and x_1 < x_2 + MOVE_EPSILON) and
+			(y_1 > y_2 - MOVE_EPSILON and y_1 < y_2 + MOVE_EPSILON))
 
 
 func _at_target_rotation() -> bool:
 	var x_1 := rotation
 	var x_2 := target_rotation
-	return x_1 > x_2 - EPSILON and x_1 < x_2 + EPSILON
+	return x_1 > x_2 - ROT_EPSILON and x_1 < x_2 + ROT_EPSILON
 
 
 func _on_pickup_area_area_entered(area: Area2D) -> void:

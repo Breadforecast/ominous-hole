@@ -1,33 +1,228 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfhv3kah7wri4"]
+[gd_scene load_steps=6 format=3 uid="uid://bfhv3kah7wri4"]
 
 [ext_resource type="Script" path="res://rov_world/world.gd" id="1_i0nd0"]
 [ext_resource type="PackedScene" uid="uid://ddinl6mwa17ai" path="res://rov_world/map/map.tscn" id="2_ihfil"]
 [ext_resource type="PackedScene" uid="uid://dnk1mawy8gd3l" path="res://rov/rov.tscn" id="2_r02ox"]
 [ext_resource type="PackedScene" uid="uid://d1kj187ej4rln" path="res://alien/alien.tscn" id="4_2ayrg"]
+[ext_resource type="PackedScene" uid="uid://dp8w73qu461yx" path="res://rov_pickup/rov_pickup.tscn" id="4_gcl5c"]
 
 [node name="ROVWorld" type="Node2D" node_paths=PackedStringArray("aliens_node", "rov")]
 script = ExtResource("1_i0nd0")
-aliens_node = NodePath(".")
+aliens_node = NodePath("Aliens")
 rov = NodePath("ROV")
 
 [node name="Map" parent="." instance=ExtResource("2_ihfil")]
+
+[node name="MainPart1" parent="." instance=ExtResource("4_gcl5c")]
+position = Vector2(915, 14450)
+
+[node name="MainPart2" parent="." instance=ExtResource("4_gcl5c")]
+position = Vector2(14553, 14619)
+
+[node name="MainPart3" parent="." instance=ExtResource("4_gcl5c")]
+position = Vector2(14236, 320)
+
+[node name="WanderPointsLv1" type="Node2D" parent="."]
+
+[node name="1" type="Node2D" parent="WanderPointsLv1"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv1/1"]
+position = Vector2(4961, 12500)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv1/1"]
+position = Vector2(4936, 13035)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv1/1"]
+position = Vector2(5159, 13657)
+
+[node name="Point4" type="Marker2D" parent="WanderPointsLv1/1"]
+position = Vector2(4441, 13385)
+
+[node name="Point5" type="Marker2D" parent="WanderPointsLv1/1"]
+position = Vector2(3918, 13297)
+
+[node name="Point6" type="Marker2D" parent="WanderPointsLv1/1"]
+position = Vector2(4096, 12839)
+
+[node name="Point7" type="Marker2D" parent="WanderPointsLv1/1"]
+position = Vector2(4390, 12426)
+
+[node name="2" type="Node2D" parent="WanderPointsLv1"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv1/2"]
+position = Vector2(784, 13741)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv1/2"]
+position = Vector2(1698, 14310)
+
+[node name="3" type="Node2D" parent="WanderPointsLv1"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv1/3"]
+position = Vector2(2193, 12946)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv1/3"]
+position = Vector2(1495, 12997)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv1/3"]
+position = Vector2(2190, 11607)
+
+[node name="4" type="Node2D" parent="WanderPointsLv1"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv1/4"]
+position = Vector2(698, 9582)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv1/4"]
+position = Vector2(1367, 10295)
+
+[node name="5" type="Node2D" parent="WanderPointsLv1"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv1/5"]
+position = Vector2(4653, 8393)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv1/5"]
+position = Vector2(4401, 8062)
+
+[node name="WanderPointsLv2" type="Node2D" parent="."]
+
+[node name="1" type="Node2D" parent="WanderPointsLv2"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv2/1"]
+position = Vector2(12354, 14366)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv2/1"]
+position = Vector2(12532, 13600)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv2/1"]
+position = Vector2(12949, 12923)
+
+[node name="Point4" type="Marker2D" parent="WanderPointsLv2/1"]
+position = Vector2(13669, 12478)
+
+[node name="2" type="Node2D" parent="WanderPointsLv2"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv2/2"]
+position = Vector2(12090, 13739)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv2/2"]
+position = Vector2(10206, 13743)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv2/2"]
+position = Vector2(8262, 13731)
+
+[node name="3" type="Node2D" parent="WanderPointsLv2"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv2/3"]
+position = Vector2(11274, 12411)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv2/3"]
+position = Vector2(10694, 12791)
+
+[node name="4" type="Node2D" parent="WanderPointsLv2"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv2/4"]
+position = Vector2(10534, 12719)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv2/4"]
+position = Vector2(10518, 13592)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv2/4"]
+position = Vector2(9515, 12614)
+
+[node name="5" type="Node2D" parent="WanderPointsLv2"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv2/5"]
+position = Vector2(9563, 11972)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv2/5"]
+position = Vector2(9597, 11520)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv2/5"]
+position = Vector2(9161, 11442)
+
+[node name="Point4" type="Marker2D" parent="WanderPointsLv2/5"]
+position = Vector2(9343, 10816)
+
+[node name="6" type="Node2D" parent="WanderPointsLv2"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv2/6"]
+position = Vector2(8565, 10719)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv2/6"]
+position = Vector2(8175, 10727)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv2/6"]
+position = Vector2(7790, 10873)
+
+[node name="7" type="Node2D" parent="WanderPointsLv2"]
+
+[node name="Point1" type="Marker2D" parent="WanderPointsLv2/7"]
+position = Vector2(8737, 8530)
+
+[node name="Point2" type="Marker2D" parent="WanderPointsLv2/7"]
+position = Vector2(8165, 8747)
+
+[node name="Point3" type="Marker2D" parent="WanderPointsLv2/7"]
+position = Vector2(7618, 8615)
+
+[node name="Point4" type="Marker2D" parent="WanderPointsLv2/7"]
+position = Vector2(7567, 8177)
+
+[node name="Point5" type="Marker2D" parent="WanderPointsLv2/7"]
+position = Vector2(7636, 7558)
+
+[node name="Point6" type="Marker2D" parent="WanderPointsLv2/7"]
+position = Vector2(8093, 7555)
+
+[node name="Point7" type="Marker2D" parent="WanderPointsLv2/7"]
+position = Vector2(8531, 7883)
+
+[node name="Aliens" type="Node2D" parent="."]
+
+[node name="Alien10" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(7806, 10875)
+wander_nav_points = NodePath("../../WanderPointsLv2/6")
+
+[node name="Alien9" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(9354, 10830)
+wander_nav_points = NodePath("../../WanderPointsLv2/5")
+
+[node name="Alien" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(4965, 12499)
+wander_nav_points = NodePath("../../WanderPointsLv1/1")
+
+[node name="Alien2" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(786, 13751)
+wander_nav_points = NodePath("../../WanderPointsLv1/2")
+
+[node name="Alien3" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(2198, 12956)
+wander_nav_points = NodePath("../../WanderPointsLv1/3")
+
+[node name="Alien4" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(4441, 8136)
+wander_nav_points = NodePath("../../WanderPointsLv1/5")
+
+[node name="Alien5" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(1185, 9915)
+wander_nav_points = NodePath("../../WanderPointsLv1/4")
+
+[node name="Alien6" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(13661, 12493)
+wander_nav_points = NodePath("../../WanderPointsLv2/1")
+
+[node name="Alien7" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(8290, 13738)
+wander_nav_points = NodePath("../../WanderPointsLv2/2")
+
+[node name="Alien8" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(11290, 12442)
+wander_nav_points = NodePath("../../WanderPointsLv2/3")
+
+[node name="Alien11" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
+position = Vector2(8733, 8526)
+wander_nav_points = NodePath("../../WanderPointsLv2/7")
 
 [node name="ROV" parent="." instance=ExtResource("2_r02ox")]
 position = Vector2(896, 898)
 rotation = 2.02852
 scale = Vector2(1.5, 1.5)
-
-[node name="WanderPoints" type="Node2D" parent="."]
-
-[node name="Marker2D" type="Marker2D" parent="WanderPoints"]
-position = Vector2(1037, 1135)
-
-[node name="Marker2D2" type="Marker2D" parent="WanderPoints"]
-position = Vector2(1132, 1499)
-
-[node name="Marker2D3" type="Marker2D" parent="WanderPoints"]
-position = Vector2(1080, 793)
-
-[node name="Alien" parent="." node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
-position = Vector2(1037, 1137)
-wander_nav_points = NodePath("../WanderPoints")

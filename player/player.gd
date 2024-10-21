@@ -54,6 +54,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_instance_valid(viewport_selected):
+		return
 	var is_camera_motion := ( event is InputEventMouseMotion and
 			Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED)
 	if is_camera_motion:

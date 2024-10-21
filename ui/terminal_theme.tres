@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://ccir3r1kplenn"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://ccir3r1kplenn"]
 
 [ext_resource type="Texture2D" uid="uid://eqhxotwutb07" path="res://terminal/grabber.png" id="1_0061b"]
 [ext_resource type="FontFile" uid="uid://d2h8npwd0g2wo" path="res://terminal/Undead Pixel 8.ttf" id="2_8m1d0"]
@@ -115,6 +115,20 @@ border_color = Color(0.733333, 0.882353, 0.901961, 1)
 corner_detail = 1
 anti_aliasing = false
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2ns1h"]
+color = Color(0.733333, 0.882353, 0.901961, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 10
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_1njr0"]
+color = Color(0.105882, 0.227451, 0.25098, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 10
+vertical = true
+
 [resource]
 default_font = ExtResource("2_8m1d0")
 default_font_size = 16
@@ -151,3 +165,5 @@ MaterialLabel/colors/font_color = Color(0.556863, 0, 0.207843, 1)
 MaterialLabel/font_sizes/font_size = 8
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_u3acw")
 RichTextLabel/colors/default_color = Color(0.733333, 0.882353, 0.901961, 1)
+VScrollBar/styles/grabber = SubResource("StyleBoxLine_2ns1h")
+VScrollBar/styles/scroll = SubResource("StyleBoxLine_1njr0")

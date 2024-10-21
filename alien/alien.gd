@@ -19,7 +19,9 @@ var rov: ROV
 var current_state := States.WANDER: set = set_current_state
 var speed := WANDER_SPEED
 var investigation_point: Vector2
+var _wander_wait_range := range(5, 10, 1)
 var _last_position: Vector2
+var _last_velocity: Vector2
 
 
 func _ready() -> void:
@@ -31,9 +33,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if rov.global_position.distance_squared_to(global_position) > 100:
-		velocity = Vector2.ZERO
-		return
+	#if rov.global_position.distance_squared_to(global_position) > 100:
+		#velocity = Vector2.ZERO
+		#return
 	var next_path_position := nav_agent.get_next_path_position()
 	var direction := global_position.direction_to(next_path_position)
 	var new_velocity = direction * WANDER_SPEED
@@ -42,7 +44,7 @@ func _physics_process(delta: float) -> void:
 
 	nav_agent.velocity = new_velocity
 	if current_state == States.WANDER:
-		$PlayerDetectionArea.rotation = velocity.angle()
+		$PlayerDetectionArea.rotation = _last_velocity.angle()
 	elif current_state == States.CHASE:
 		$PlayerDetectionArea.look_at(rov.global_position)
 
@@ -76,6 +78,7 @@ func update_radar_previous_sprite_position() -> void:
 func _on_nav_agent_navigation_finished() -> void:
 	match current_state:
 		States.WANDER:
+			await get_tree().create_timer(_wander_wait_range.pick_random()).timeout
 			var target_position: Vector2
 			if is_instance_valid(wander_nav_points):
 				var nav_points := wander_nav_points.get_children()
@@ -96,6 +99,8 @@ func _on_nav_agent_navigation_finished() -> void:
 func _on_nav_agent_velocity_computed(safe_velocity: Vector2) -> void:
 	var delta := get_physics_process_delta_time()
 	velocity = velocity.move_toward(safe_velocity, 100.0 * delta)
+	if safe_velocity.length() > 0:
+		_last_velocity = velocity
 	move_and_slide()
 
 
