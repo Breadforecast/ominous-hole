@@ -13,7 +13,7 @@ mesh = NodePath("blockbench_export")
 collision_shape = NodePath("CollisionShape3D")
 
 [node name="blockbench_export" parent="." index="0" instance=ExtResource("2_l0h2r")]
-transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0.000671387, 0, 0.000579834)
+transform = Transform3D(-0.574025, 0, 1.38582, 0, 1.5, 0, -1.38582, 0, -0.574025, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.91038e-11, 1.51942, 2.91038e-11)

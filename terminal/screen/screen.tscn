@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dil35frmlrgr7"]
+[gd_scene load_steps=9 format=3 uid="uid://dil35frmlrgr7"]
 
 [ext_resource type="PackedScene" uid="uid://mgocrg1ae4ua" path="res://terminal/terminal.tscn" id="1_7xeda"]
 [ext_resource type="Script" path="res://terminal/screen/screen.gd" id="1_wvj26"]
 [ext_resource type="PackedScene" uid="uid://cuf482xqiqi7q" path="res://pickups/unknown_command/unknown_command.tscn" id="2_1nkb8"]
+[ext_resource type="AudioStream" uid="uid://cbli215v8tmg7" path="res://rov_world/sfx/395015-RC-Car-Idling-04.wav" id="4_6stg3"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_mwmpn"]
 viewport_path = NodePath("SubViewport")
@@ -17,7 +18,7 @@ texture_repeat = false
 [sub_resource type="QuadMesh" id="QuadMesh_ni1lr"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_sotgq")
-size = Vector2(0.878, 0.643)
+size = Vector2(0.878, 0.523)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pambf"]
 size = Vector3(1.05296, 1.04834, 0.168475)
@@ -50,6 +51,11 @@ fov = 29.3
 
 [node name="SubViewport" type="SubViewport" parent="."]
 canvas_item_default_texture_filter = 0
-size = Vector2i(1280, 720)
+size = Vector2i(640, 360)
 
 [node name="Terminal" parent="SubViewport" instance=ExtResource("1_7xeda")]
+
+[node name="RCMove" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_6stg3")
+volume_db = -38.519
+bus = &"Terminal"

@@ -13,6 +13,10 @@ rov = NodePath("ROV")
 
 [node name="Map" parent="." instance=ExtResource("2_ihfil")]
 
+[node name="ROV" parent="." instance=ExtResource("2_r02ox")]
+position = Vector2(896, 898)
+rotation = 2.02852
+
 [node name="MainPart1" parent="." instance=ExtResource("4_gcl5c")]
 position = Vector2(915, 14450)
 
@@ -221,7 +225,3 @@ wander_nav_points = NodePath("../../WanderPointsLv2/3")
 [node name="Alien11" parent="Aliens" node_paths=PackedStringArray("wander_nav_points") instance=ExtResource("4_2ayrg")]
 position = Vector2(8733, 8526)
 wander_nav_points = NodePath("../../WanderPointsLv2/7")
-
-[node name="ROV" parent="." instance=ExtResource("2_r02ox")]
-position = Vector2(896, 898)
-rotation = 2.02852

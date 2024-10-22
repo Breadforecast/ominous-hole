@@ -11,6 +11,10 @@ extends Node3D
 var interacting: set = set_interacting
 
 
+func _ready() -> void:
+	terminal.commands.spawn_unknown_command.connect(_on_commands_spawn_unknown_command)
+
+
 func _input(event: InputEvent) -> void:
 	if interacting:
 		viewport.push_input(event)
