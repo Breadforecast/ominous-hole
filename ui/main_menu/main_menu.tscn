@@ -48,7 +48,8 @@ __follow_timeline = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_55wb4"]
 
-[node name="MainMenu" type="MarginContainer"]
+[node name="MainMenu" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -58,32 +59,47 @@ theme = ExtResource("1_vd5cp")
 script = ExtResource("2_1fw62")
 options_menu_scene = ExtResource("3_ygesk")
 ship_scene = ExtResource("4_huhve")
-metadata/_edit_lock_ = true
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="Musc" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_mlhup")
+autoplay = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 50
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer2"]
 layout_mode = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="MarginContainer2/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1264, 704)
+size = Vector2i(1280, 620)
 render_target_update_mode = 4
 
-[node name="room" parent="SubViewportContainer/SubViewport" instance=ExtResource("5_eprer")]
+[node name="room" parent="MarginContainer2/SubViewportContainer/SubViewport" instance=ExtResource("5_eprer")]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="MarginContainer2/SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_vr8na")
 
-[node name="Lights" type="Node3D" parent="SubViewportContainer/SubViewport/WorldEnvironment"]
+[node name="Lights" type="Node3D" parent="MarginContainer2/SubViewportContainer/SubViewport/WorldEnvironment"]
 
-[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
+[node name="SpotLight3D" type="SpotLight3D" parent="MarginContainer2/SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
 transform = Transform3D(1, 0, 0, 0, 5.96046e-08, 1, 0, -1, 5.96046e-08, 0, 3.81876, 0)
 light_color = Color(0.8863, 0.935563, 1, 1)
 light_bake_mode = 1
 spot_range = 4.73965
 spot_angle = 37.5227
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
+[node name="SpotLight3D2" type="SpotLight3D" parent="MarginContainer2/SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
 transform = Transform3D(1, 0, 0, 0, 5.96046e-08, 1, 0, -1, 5.96046e-08, 0.222085, 3.81876, -3.47354)
 light_color = Color(0.8863, 0.935563, 1, 1)
 light_energy = 0.2
@@ -91,14 +107,14 @@ light_bake_mode = 1
 spot_range = 4.73965
 spot_angle = 83.1423
 
-[node name="SpotLight3D3" type="SpotLight3D" parent="SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
+[node name="SpotLight3D3" type="SpotLight3D" parent="MarginContainer2/SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
 transform = Transform3D(1, 0, 0, 0, 5.96046e-08, 1, 0, -1, 5.96046e-08, 0, 3.81876, 3.81076)
 light_color = Color(0.8863, 0.935563, 1, 1)
 light_bake_mode = 1
 spot_range = 4.73965
 spot_angle = 37.5227
 
-[node name="SpotLight3D5" type="SpotLight3D" parent="SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
+[node name="SpotLight3D5" type="SpotLight3D" parent="MarginContainer2/SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
 transform = Transform3D(1, 0, 0, 0, 5.96046e-08, 1, 0, -1, 5.96046e-08, -2.00216, 3.81876, 4.00569)
 light_color = Color(0.8863, 0.935563, 1, 1)
 light_energy = 0.2
@@ -106,7 +122,7 @@ light_bake_mode = 1
 spot_range = 4.73965
 spot_angle = 58.2304
 
-[node name="SpotLight3D4" type="SpotLight3D" parent="SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
+[node name="SpotLight3D4" type="SpotLight3D" parent="MarginContainer2/SubViewportContainer/SubViewport/WorldEnvironment/Lights"]
 transform = Transform3D(1, 0, 0, 0, 5.96046e-08, 1, 0, -1, 5.96046e-08, -1.95151, 3.31749, -2.43872)
 light_color = Color(0.8863, 0.935563, 1, 1)
 light_energy = 0.216
@@ -114,25 +130,26 @@ light_bake_mode = 1
 spot_range = 2.9219
 spot_angle = 64.923
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(0.191707, 0.0972385, -0.976623, 0.0802097, 0.990199, 0.114335, 0.978169, -0.100253, 0.182029, 0.233063, 0.952786, -0.74038)
+[node name="Camera3D" type="Camera3D" parent="MarginContainer2/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.19171, 0.0972317, -0.976623, 0.0802441, 0.990196, 0.114335, 0.978166, -0.100287, 0.182029, 0.233063, 0.952786, -0.74038)
+current = true
 fov = 92.2
 
-[node name="ShakerComponent3D" type="Node3D" parent="SubViewportContainer/SubViewport/Camera3D"]
+[node name="ShakerComponent3D" type="Node3D" parent="MarginContainer2/SubViewportContainer/SubViewport/Camera3D"]
 script = ExtResource("6_pkb2a")
-is_playing = true
 AutoPlay = true
 intensity = 0.537
 shake_speed = 0.1
 fade_in = 0.241484
 shakerPreset = SubResource("Resource_i0ifr")
 
-[node name="Musc" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_mlhup")
-autoplay = true
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
@@ -187,7 +204,8 @@ Wagoogus Jr. - Programming, music, development
 NotJam - Font
 zodiepupper - Panel3D
 Eneskp - Shaker
-mihe - Godot Jolt"
+mihe - Godot Jolt
+arlez80 - CRT shader"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0

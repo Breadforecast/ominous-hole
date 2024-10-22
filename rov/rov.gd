@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 				current_state = States.IDLE
 				stop_drone()
 		States.MOVING:
-			if _on_target_position() or %CollisionCheck.is_colliding():
+			if _on_target_position():
 				stop_drone()
 				current_state = States.IDLE
 				return
@@ -143,3 +143,11 @@ func _on_gun_kill_area_body_entered(body: Node2D) -> void:
 func _on_gun_kill_area_body_exited(body: Node2D) -> void:
 	if body is Alien:
 		shoot_area_targets.erase(body)
+
+
+func _on_collision_check_body_shape_entered(body_rid: RID, body: Node2D,
+		body_shape_index: int, local_shape_index: int) -> void:
+	print(body.name)
+	if body is not Alien or ROVPickup:
+		stop_drone()
+		current_state = States.IDLE

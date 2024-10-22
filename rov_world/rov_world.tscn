@@ -225,4 +225,3 @@ wander_nav_points = NodePath("../../WanderPointsLv2/7")
 [node name="ROV" parent="." instance=ExtResource("2_r02ox")]
 position = Vector2(896, 898)
 rotation = 2.02852
-scale = Vector2(1.5, 1.5)

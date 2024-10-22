@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cik25x4muocna"]
+[gd_scene load_steps=8 format=3 uid="uid://cik25x4muocna"]
 
 [ext_resource type="Theme" uid="uid://ccir3r1kplenn" path="res://ui/terminal_theme.tres" id="1_wppcu"]
 [ext_resource type="Script" path="res://workbench/recipe_list/recipe_list.gd" id="2_6a0tv"]
@@ -6,7 +6,116 @@
 [ext_resource type="Resource" uid="uid://4dxr3jwu17ua" path="res://recipes/super_test_cube.tres" id="4_w2qy5"]
 [ext_resource type="Resource" uid="uid://djsegilx7a01c" path="res://recipes/super_super_test_cube.tres" id="5_sy1ya"]
 
-[node name="CraftUI" type="PanelContainer"]
+[sub_resource type="Shader" id="Shader_qxeif"]
+code = "/*
+	CRT shader for Godot Engine by Yui Kinomoto @arlez80
+*/
+shader_type canvas_item;
+
+// 画面
+uniform sampler2D screen_texture : hint_screen_texture;
+
+// ブラウン管のガラスの曲がり具合（フラットなやつは0.0でいいかな）
+uniform float crt_curve : hint_range( 0.0, 1.0 ) = 0.02;
+// 走査線の濃さ
+uniform float crt_scan_line_color : hint_range( 0.0, 1.0 ) = 0.347;
+// 光量
+uniform float aperture_grille_rate : hint_range( 0.0, 1.0 ) = 0.4;
+// RFスイッチ的ブラー
+uniform float rf_switch_esque_blur : hint_range( 0.0, 1.0 ) = 1.0;
+// 白色ノイズ
+uniform float white_noise_rate : hint_range( 0.0, 1.0 ) = 0.0;
+
+float random( vec2 pos )
+{ 
+	return fract(sin(dot(pos, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+void fragment( )
+{
+	// ガラスの曲がり具合
+	vec2 crt_curve_shift = ( vec2( 1.0, 1.0 ) - sin( UV.yx * PI ) ) * crt_curve;
+	vec2 crt_curve_scale = vec2( 1.0, 1.0 ) + crt_curve_shift * 2.0;
+	vec2 texture_fixed_uv = UV * crt_curve_scale - crt_curve_shift;
+	vec2 fixed_uv = SCREEN_UV * crt_curve_scale - crt_curve_shift;
+	// 範囲外を消す
+	float enable_color = float( 0.0 <= texture_fixed_uv.x && texture_fixed_uv.x <= 1.0 && 0.0 <= texture_fixed_uv.y && texture_fixed_uv.y <= 1.0 );
+
+	// ガラスの曲がり具合から元色を取得 + RFスイッチ的ブラー
+	COLOR.rgb = (
+		(
+			texture( screen_texture, fixed_uv ).rgb
+		*	( 1.0 - rf_switch_esque_blur * 0.5 )
+		)
+	+	(
+			(
+				texture( screen_texture, fixed_uv + vec2( -SCREEN_PIXEL_SIZE.x * 3.1, 0.0 ) ).rgb
+			+	texture( screen_texture, fixed_uv + vec2( SCREEN_PIXEL_SIZE.x * 3.1, 0.0 ) ).rgb
+			)
+			*	( rf_switch_esque_blur * 0.25 )	// （RFノイズ）0.5 * （テクスチャから読んだ2箇所を半分にしたい）0.5
+		)
+	) * enable_color;
+	COLOR.a = 1.0;
+
+	// ------------------------------------------------
+	// 以下はアパーチャグリル上の1ピクセルごとの処理
+	vec2 aperture_grille_pixel = vec2( floor( ( fixed_uv.x / SCREEN_PIXEL_SIZE.x ) / 3.0 ) * 3.0, fixed_uv.y );
+
+	// 白色ノイズ
+	float white_noise = random( aperture_grille_pixel + vec2( sin( TIME * 0.543254 ), cos( TIME * 0.254323563 ) ) );
+	COLOR.rgb = mix(
+		COLOR.rgb
+	,	vec3( white_noise, white_noise, white_noise )
+	,	white_noise_rate * enable_color
+	);
+
+	// アパーチャグリル再現
+	float aperture_grille_point = mod( ( ( SCREEN_UV.x * crt_curve_scale.x ) - crt_curve_shift.x ) / SCREEN_PIXEL_SIZE.x, 3.0 );
+	float aperture_grille_r_rate = clamp( 1.0 - aperture_grille_point, 0.0, 1.0 ) + clamp( aperture_grille_point - 2.0, 0.0, 1.0 );
+	float aperture_grille_g_rate = clamp( 1.0 - abs( 1.0 - aperture_grille_point ), 0.0, 1.0 );
+	float aperture_grille_b_rate = 1.0 - aperture_grille_r_rate - aperture_grille_g_rate;
+	COLOR = clamp(
+		COLOR * vec4(
+			normalize( vec3(
+				clamp( aperture_grille_r_rate, aperture_grille_rate, 1.0 )
+			,	clamp( aperture_grille_g_rate, aperture_grille_rate, 1.0 )
+			,	clamp( aperture_grille_b_rate, aperture_grille_rate, 1.0 )
+			) )
+		,	1.0
+		)
+	,	vec4( 0.0, 0.0, 0.0, 0.0 )
+	,	vec4( 1.0, 1.0, 1.0, 1.0 )
+	);
+
+	// 走査線
+	COLOR = mix(
+		COLOR
+	,	vec4( 0.0, 0.0, 0.0, 1.0 )
+	,	float( 0 == int( fixed_uv.y / SCREEN_PIXEL_SIZE.y ) % 2 ) * crt_scan_line_color
+	);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhcjr"]
+shader = SubResource("Shader_qxeif")
+shader_parameter/crt_curve = 0.0
+shader_parameter/crt_scan_line_color = 0.347
+shader_parameter/aperture_grille_rate = 0.4
+shader_parameter/rf_switch_esque_blur = 0.283
+shader_parameter/white_noise_rate = 0.0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_6a0tv")
+recipes = Array[ExtResource("3_yd6wt")]([ExtResource("4_w2qy5"), ExtResource("5_sy1ya")])
+
+[node name="CraftUI" type="PanelContainer" parent="."]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -19,52 +128,50 @@ offset_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_wppcu")
-script = ExtResource("2_6a0tv")
-recipes = Array[ExtResource("3_yd6wt")]([ExtResource("4_w2qy5"), ExtResource("5_sy1ya")])
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="CraftUI"]
 layout_mode = 2
 
-[node name="RecipeNameLabel" type="Label" parent="VBoxContainer"]
+[node name="RecipeNameLabel" type="Label" parent="CraftUI/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.882353, 0.733333, 0.0627451, 1)
 text = "Recipe Name"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CraftUI/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="LeftButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="LeftButton" type="Button" parent="CraftUI/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "<"
 
-[node name="MaterialsContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="MaterialsContainer" type="VBoxContainer" parent="CraftUI/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MaterialsLabel" type="Label" parent="VBoxContainer/HBoxContainer/MaterialsContainer"]
+[node name="MaterialsLabel" type="Label" parent="CraftUI/VBoxContainer/HBoxContainer/MaterialsContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Materials:"
 
-[node name="ListContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MaterialsContainer"]
+[node name="ListContainer" type="VBoxContainer" parent="CraftUI/VBoxContainer/HBoxContainer/MaterialsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RightButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="RightButton" type="Button" parent="CraftUI/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = ">"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CraftUI/VBoxContainer"]
 layout_mode = 2
 
-[node name="CraftButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="CraftButton" type="Button" parent="CraftUI/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_hover_pressed_color = Color(0.0588235, 0.054902, 0.133333, 1)
@@ -73,7 +180,7 @@ theme_override_colors/font_pressed_color = Color(0.0588235, 0.054902, 0.133333, 
 theme_override_colors/font_color = Color(0.882353, 0.733333, 0.0627451, 1)
 text = "Craft"
 
-[node name="MaterialsButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="MaterialsButton" type="Button" parent="CraftUI/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_hover_pressed_color = Color(0.0588235, 0.054902, 0.133333, 1)
@@ -82,7 +189,16 @@ theme_override_colors/font_pressed_color = Color(0.0588235, 0.054902, 0.133333, 
 theme_override_colors/font_color = Color(0.882353, 0.733333, 0.0627451, 1)
 text = "Get R.O.V. Materials"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LeftButton" to="." method="_on_left_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/RightButton" to="." method="_on_right_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CraftButton" to="." method="_on_craft_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/MaterialsButton" to="." method="_on_materials_button_pressed"]
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_jhcjr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="CraftUI/VBoxContainer/HBoxContainer/LeftButton" to="CraftUI" method="_on_left_button_pressed"]
+[connection signal="pressed" from="CraftUI/VBoxContainer/HBoxContainer/RightButton" to="CraftUI" method="_on_right_button_pressed"]
+[connection signal="pressed" from="CraftUI/VBoxContainer/HBoxContainer2/CraftButton" to="CraftUI" method="_on_craft_button_pressed"]
+[connection signal="pressed" from="CraftUI/VBoxContainer/HBoxContainer2/MaterialsButton" to="CraftUI" method="_on_materials_button_pressed"]

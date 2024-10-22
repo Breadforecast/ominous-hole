@@ -33,7 +33,7 @@ func set_input_focus(value: bool) -> void:
 func _on_input_field_text_submitted(new_text: String) -> void:
 	if new_text.is_empty():
 		return
-	$PanelContainer/TerminalContainer/VBoxContainer/TerminalOutput/ScrollContainer.scroll_vertical(1000)
+	%ScrollContainer.scroll_vertical += 1000
 	output_command_text(new_text)
 	commands.send_command(new_text)
 
