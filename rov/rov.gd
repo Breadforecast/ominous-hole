@@ -66,7 +66,7 @@ func move_drone(units: float) -> void:
 
 
 func rotate_drone(degrees: float) -> void:
-	var new_rotation_radians := rotation + deg_to_rad(degrees)
+	var new_rotation_radians :=  deg_to_rad(degrees)
 	target_rotation = new_rotation_radians
 	current_state = States.ROTATING
 

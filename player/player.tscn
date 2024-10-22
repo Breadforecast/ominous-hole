@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dyjuoefvl2pxp" path="res://ui/player/player_ui.tscn" id="2_x8h3d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_skb4x"]
-height = 3.0
+height = 2.58843
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkfvj"]
 shading_mode = 0

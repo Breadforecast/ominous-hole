@@ -1,4 +1,4 @@
-extends MarginContainer
+extends Control
 
 
 @export var options_menu_scene: PackedScene
